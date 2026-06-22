@@ -1,0 +1,1419 @@
+
+<!doctype html>
+<html lang="pl" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Integracja bramki płatniczej Tpay ze sklepem Shopware 6 (by CREHLER).">
+      
+      
+        <meta name="author" content="Crehler Sp. z o.o.">
+      
+      
+        <link rel="canonical" href="https://crehler.github.io/tpay/konfiguracja/">
+      
+      
+        <link rel="prev" href="../instalacja/">
+      
+      
+        <link rel="next" href="../store-api/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../images/tpay_logo.jpg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Konfiguracja - Bramka płatności Tpay by CREHLER — dokumentacja</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zanim-zaczniesz" class="md-skip">
+          Przejdź do treści
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Nagłówek">
+    <a href=".." title="Bramka płatności Tpay by CREHLER — dokumentacja" class="md-header__button md-logo" aria-label="Bramka płatności Tpay by CREHLER — dokumentacja" data-md-component="logo">
+      
+  <img src="../images/tpay_logo.jpg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bramka płatności Tpay by CREHLER — dokumentacja
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Konfiguracja
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Tryb ciemny"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Tryb ciemny" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Tryb jasny"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Tryb jasny" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Szukaj" placeholder="Szukaj" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Szukaj">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Wyczyść" aria-label="Wyczyść" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicjowanie wyszukiwania
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/crehler/tpay" title="Przejdź do repozytorium" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    crehler/tpay
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Nawigacja" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Bramka płatności Tpay by CREHLER — dokumentacja" class="md-nav__button md-logo" aria-label="Bramka płatności Tpay by CREHLER — dokumentacja" data-md-component="logo">
+      
+  <img src="../images/tpay_logo.jpg" alt="logo">
+
+    </a>
+    Bramka płatności Tpay by CREHLER — dokumentacja
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/crehler/tpay" title="Przejdź do repozytorium" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    crehler/tpay
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instalacja/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instalacja
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Konfiguracja
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Konfiguracja
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Spis treści">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zanim-zaczniesz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zanim zaczniesz
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-1-pobierz-dane-z-panelu-tpay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 1 — Pobierz dane z panelu Tpay
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 1 — Pobierz dane z panelu Tpay">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-client-id-i-secret-klucze-open-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1a. Client ID i Secret (klucze Open API)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1b-kod-bezpieczenstwa-powiadomien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1b. Kod bezpieczeństwa powiadomień
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1c-klucz-publiczny-cards-api-opcjonalnie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1c. Klucz publiczny Cards API (opcjonalnie)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-2-wpisz-dane-w-konfiguracji-wtyczki" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 2 — Wpisz dane w konfiguracji wtyczki
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 2 — Wpisz dane w konfiguracji wtyczki">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2a-dane-produkcyjne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2a. Dane produkcyjne
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2b-dane-sandbox-do-testow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2b. Dane sandbox (do testów)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2c-przetestuj-dane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2c. Przetestuj dane
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-3-przypisz-patnosci-do-kanau-sprzedazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 3 — Przypisz płatności do kanału sprzedaży
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 3 — Przypisz płatności do kanału sprzedaży">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3a-aktywuj-metody-patnosci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3a. Aktywuj metody płatności
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3b-dodaj-metody-do-kanau-sprzedazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3b. Dodaj metody do kanału sprzedaży
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-4-konfiguracja-patnosci-karta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 4 — Konfiguracja płatności kartą
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 4 — Konfiguracja płatności kartą">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tryb-domyslny-przekierowanie-zalecany" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tryb domyślny: przekierowanie (zalecany)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tryb-osadzony-formularz-karty-w-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tryb osadzony: formularz karty w checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-5-test-patnosci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 5 — Test płatności
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dane-testowe-sandbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dane testowe (sandbox)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dane testowe (sandbox)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blik-kody-testowe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLIK — kody testowe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#karta-numery-testowe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Karta — numery testowe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#przelew-pay-by-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Przelew (pay-by-link)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#powiazane-artykuy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Powiązane artykuły
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsparcie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wsparcie
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../store-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Store API (headless)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zwroty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zwroty płatności
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Spis treści">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zanim-zaczniesz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zanim zaczniesz
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-1-pobierz-dane-z-panelu-tpay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 1 — Pobierz dane z panelu Tpay
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 1 — Pobierz dane z panelu Tpay">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-client-id-i-secret-klucze-open-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1a. Client ID i Secret (klucze Open API)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1b-kod-bezpieczenstwa-powiadomien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1b. Kod bezpieczeństwa powiadomień
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1c-klucz-publiczny-cards-api-opcjonalnie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1c. Klucz publiczny Cards API (opcjonalnie)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-2-wpisz-dane-w-konfiguracji-wtyczki" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 2 — Wpisz dane w konfiguracji wtyczki
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 2 — Wpisz dane w konfiguracji wtyczki">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2a-dane-produkcyjne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2a. Dane produkcyjne
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2b-dane-sandbox-do-testow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2b. Dane sandbox (do testów)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2c-przetestuj-dane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2c. Przetestuj dane
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-3-przypisz-patnosci-do-kanau-sprzedazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 3 — Przypisz płatności do kanału sprzedaży
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 3 — Przypisz płatności do kanału sprzedaży">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3a-aktywuj-metody-patnosci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3a. Aktywuj metody płatności
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3b-dodaj-metody-do-kanau-sprzedazy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3b. Dodaj metody do kanału sprzedaży
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-4-konfiguracja-patnosci-karta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 4 — Konfiguracja płatności kartą
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Krok 4 — Konfiguracja płatności kartą">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tryb-domyslny-przekierowanie-zalecany" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tryb domyślny: przekierowanie (zalecany)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tryb-osadzony-formularz-karty-w-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tryb osadzony: formularz karty w checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#krok-5-test-patnosci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Krok 5 — Test płatności
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dane-testowe-sandbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dane testowe (sandbox)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dane testowe (sandbox)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blik-kody-testowe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLIK — kody testowe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#karta-numery-testowe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Karta — numery testowe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#przelew-pay-by-link" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Przelew (pay-by-link)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#powiazane-artykuy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Powiązane artykuły
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wsparcie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wsparcie
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<p align="center">
+  <img src="images/tpay_logo.jpg" alt="Tpay" height="64">
+</p>
+
+<h1 align="center">Tpay dla Shopware 6 — instrukcja konfiguracji</h1>
+
+<p align="center">Bramka płatności Tpay by CREHLER — krok po kroku: od danych z panelu Tpay po gotowe płatności w sklepie.</p>
+
+<hr />
+<blockquote>
+<p>ℹ️ Instalację wtyczki (Composer lub ZIP) opisuje <strong><a href="../instalacja/">Instrukcja instalacji</a></strong>. Ten dokument zakłada, że wtyczka jest już zainstalowana i aktywna.</p>
+</blockquote>
+<hr />
+<h2 id="zanim-zaczniesz">Zanim zaczniesz<a class="headerlink" href="#zanim-zaczniesz" title="Permanent link">&para;</a></h2>
+<p>Potrzebujesz:</p>
+<ul>
+<li><strong>aktywnego konta Tpay</strong> z dostępem do <strong>Open API</strong> (do płatności produkcyjnych) lub <strong>konta sandbox</strong> (do testów),</li>
+<li>sklepu Shopware z kanałem sprzedaży obsługującym walutę <strong>PLN</strong>,</li>
+<li>zainstalowanej i aktywnej wtyczki <strong>Bramka płatności Tpay by CREHLER</strong>.</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Najpierw testy.</strong> Zalecamy skonfigurowanie i przetestowanie płatności na danych <strong>sandbox</strong>, a dopiero potem przełączenie na produkcję.</p>
+</blockquote>
+<hr />
+<h2 id="krok-1-pobierz-dane-z-panelu-tpay">Krok 1 — Pobierz dane z panelu Tpay<a class="headerlink" href="#krok-1-pobierz-dane-z-panelu-tpay" title="Permanent link">&para;</a></h2>
+<p>Zaloguj się do panelu Tpay (<a href="https://panel.tpay.com/">panel produkcyjny</a> lub panel sandbox) i zbierz cztery wartości. Wszystkie znajdziesz w panelu — poniżej dokładne ścieżki.</p>
+<h3 id="1a-client-id-i-secret-klucze-open-api">1a. Client ID i Secret (klucze Open API)<a class="headerlink" href="#1a-client-id-i-secret-klucze-open-api" title="Permanent link">&para;</a></h3>
+<p>Panel Tpay → menu <strong>Integracje → API</strong>. Na liście kluczy Open API znajdziesz <strong>Client ID</strong> oraz <strong>Secret</strong> — skopiuj obie wartości. Jeśli nie masz jeszcze żadnego klucza, utwórz go przyciskiem <strong>„Dodaj nowy klucz"</strong>.</p>
+<p><img alt="Panel Tpay, Integracje → API — pola Client ID i Secret oraz przycisk „Dodaj nowy klucz&quot;" src="../images/01-tpay-open-api-keys.png" /></p>
+<h3 id="1b-kod-bezpieczenstwa-powiadomien">1b. Kod bezpieczeństwa powiadomień<a class="headerlink" href="#1b-kod-bezpieczenstwa-powiadomien" title="Permanent link">&para;</a></h3>
+<p>Panel Tpay → menu <strong>Ustawienia → Powiadomienia</strong>. W karcie <strong>„Zabezpieczenia"</strong> skopiuj <strong>Kod bezpieczeństwa</strong>.</p>
+<p>To pole jest <strong>wymagane</strong> — standardowe powiadomienia o płatności Tpay są weryfikowane sumą kontrolną MD5 z użyciem tego kodu. Bez niego potwierdzenia płatności są odrzucane, a zamówienia pozostają nieopłacone.</p>
+<p><img alt="Panel Tpay, Ustawienia → Powiadomienia, karta „Zabezpieczenia&quot; — pole Kod bezpieczeństwa" src="../images/02-tpay-security-code.png" /></p>
+<h3 id="1c-klucz-publiczny-cards-api-opcjonalnie">1c. Klucz publiczny Cards API (opcjonalnie)<a class="headerlink" href="#1c-klucz-publiczny-cards-api-opcjonalnie" title="Permanent link">&para;</a></h3>
+<p>Potrzebny <strong>tylko</strong>, jeśli zamierzasz osadzić formularz karty w checkout (patrz <strong>Krok 4 — Konfiguracja płatności kartą</strong>). Znajdziesz go na <strong>tej samej stronie co klucze API</strong> (<strong>Integracje → API</strong>) — przewiń na sam dół do karty <strong>„Cards API"</strong> i skopiuj <strong>klucz publiczny</strong> (base64).</p>
+<p><img alt="Panel Tpay, Integracje → API (dół strony), karta „Cards API&quot; — klucz publiczny w formacie base64" src="../images/03-tpay-cards-api-key.png" /></p>
+<blockquote>
+<p>🧪 <strong>Sandbox:</strong> te same trzy ekrany istnieją w panelu sandbox Tpay i dają osobne wartości (Client ID / Secret / kod bezpieczeństwa / klucz Cards API). Wpisuje się je w osobną kartę „Dane sandbox" w konfiguracji wtyczki.</p>
+</blockquote>
+<hr />
+<h2 id="krok-2-wpisz-dane-w-konfiguracji-wtyczki">Krok 2 — Wpisz dane w konfiguracji wtyczki<a class="headerlink" href="#krok-2-wpisz-dane-w-konfiguracji-wtyczki" title="Permanent link">&para;</a></h2>
+<p>W panelu Shopware przejdź do <strong>Rozszerzenia → Moje rozszerzenia</strong>, znajdź <strong>Bramka płatności Tpay by CREHLER</strong> (musi być włączona — przełącznik po lewej) i kliknij <strong>„Skonfiguruj"</strong>.</p>
+<p><img alt="Shopware: Rozszerzenia → Moje rozszerzenia — wtyczka Bramka płatności Tpay by CREHLER i przycisk „Skonfiguruj&quot;" src="../images/04-sw-extension-configure.png" /></p>
+<h3 id="2a-dane-produkcyjne">2a. Dane produkcyjne<a class="headerlink" href="#2a-dane-produkcyjne" title="Permanent link">&para;</a></h3>
+<p>Wypełnij kartę <strong>Dane produkcyjne</strong> wartościami z <strong>Kroku 1</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pole w konfiguracji</th>
+<th>Wartość z panelu Tpay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Client ID</strong></td>
+<td>Client ID (Klucze Open API)</td>
+</tr>
+<tr>
+<td><strong>Client Secret</strong> (w panelu: „Secret")</td>
+<td>Secret (Klucze Open API)</td>
+</tr>
+<tr>
+<td><strong>Kod bezpieczeństwa powiadomień</strong></td>
+<td>Kod bezpieczeństwa (Powiadomienia → Bezpieczeństwo)</td>
+</tr>
+<tr>
+<td><strong>Klucz publiczny Cards API</strong></td>
+<td>klucz publiczny Cards API <em>(opcjonalnie — tylko dla osadzonego formularza karty)</em></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Konfiguracja wtyczki, karta Dane produkcyjne — Client ID, Client Secret, Kod bezpieczeństwa powiadomień, Klucz publiczny Cards API i przycisk „Testuj dane produkcyjne&quot;" src="../images/05-config-production.png" /></p>
+<blockquote>
+<p>⚠️ <strong>Wybór kanału sprzedaży.</strong> U góry konfiguracji znajduje się przełącznik kanału sprzedaży. Ustawienia możesz zapisać globalnie („Wszystkie kanały sprzedaży") lub osobno dla wybranego kanału. Jeśli korzystasz z kilku kanałów z różnymi kontami Tpay — ustaw dane per kanał.</p>
+</blockquote>
+<h3 id="2b-dane-sandbox-do-testow">2b. Dane sandbox (do testów)<a class="headerlink" href="#2b-dane-sandbox-do-testow" title="Permanent link">&para;</a></h3>
+<p>Aby płacić na koncie testowym, włącz <strong>Tryb sandbox</strong> i wypełnij kartę <strong>Dane sandbox</strong> danymi z panelu sandbox. Gdy tryb sandbox jest włączony, wtyczka używa danych sandbox zamiast produkcyjnych.</p>
+<p><img alt="Konfiguracja wtyczki, karta Dane sandbox — włączony przełącznik Tryb sandbox, pola sandbox i przycisk „Testuj dane sandbox&quot;" src="../images/06-config-sandbox.png" /></p>
+<h3 id="2c-przetestuj-dane">2c. Przetestuj dane<a class="headerlink" href="#2c-przetestuj-dane" title="Permanent link">&para;</a></h3>
+<p>Pod każdą kartą znajduje się przycisk testu: <strong>„Testuj dane produkcyjne"</strong> oraz <strong>„Testuj dane sandbox"</strong>. Kliknij właściwy po wpisaniu danych — wtyczka połączy się z Tpay i potwierdzi, że klucze są poprawne. Na koniec kliknij <strong>„Zapisz"</strong> (prawy górny róg).</p>
+<p><img alt="Komunikat sukcesu po teście połączenia — potwierdzenie poprawnych danych i liczba dostępnych kanałów płatności" src="../images/07-config-test-connection.png" /></p>
+<hr />
+<h2 id="krok-3-przypisz-patnosci-do-kanau-sprzedazy">Krok 3 — Przypisz płatności do kanału sprzedaży<a class="headerlink" href="#krok-3-przypisz-patnosci-do-kanau-sprzedazy" title="Permanent link">&para;</a></h2>
+<p>Aby metody Tpay (BLIK, karta, przelew) były widoczne w checkout, muszą być <strong>aktywne</strong> i <strong>przypisane do kanału sprzedaży</strong>.</p>
+<h3 id="3a-aktywuj-metody-patnosci">3a. Aktywuj metody płatności<a class="headerlink" href="#3a-aktywuj-metody-patnosci" title="Permanent link">&para;</a></h3>
+<p><strong>Ustawienia → Metody płatności</strong> — upewnij się, że metody Tpay są aktywne (przełącznik <strong>„Aktywny"</strong>). Wtyczka dodaje trzy: <strong>Karta</strong>, <strong>BLIK</strong> i <strong>Przelew online</strong> — każda opisana „… Bramka płatności Tpay by CREHLER".</p>
+<p><img alt="Shopware: Ustawienia → Metody płatności — Karta, BLIK i Przelew online (Tpay) z włączonym przełącznikiem „Aktywny&quot;" src="../images/08-sw-payment-methods.png" /></p>
+<h3 id="3b-dodaj-metody-do-kanau-sprzedazy">3b. Dodaj metody do kanału sprzedaży<a class="headerlink" href="#3b-dodaj-metody-do-kanau-sprzedazy" title="Permanent link">&para;</a></h3>
+<p>W menu po lewej (sekcja <strong>Kanały sprzedaży</strong>) wybierz swój kanał (np. <strong>Crehler</strong>). W sekcji <strong>Płatność i wysyłka</strong> → pole <strong>Metody płatności</strong> dodaj metody Tpay, a w polu <strong>Standardowa metoda płatności</strong> możesz ustawić jedną z nich jako domyślną. Upewnij się też, że <strong>Standardowa waluta</strong> to <strong>Złoty (PLN)</strong>. Zapisz.</p>
+<p><img alt="Kanał sprzedaży Crehler, sekcja Płatność i wysyłka — metody Karta, BLIK, Przelew online (Tpay), Standardowa metoda płatności i Standardowa waluta Złoty" src="../images/09-sw-saleschannel-payments.png" /></p>
+<blockquote>
+<p>💡 Jeśli metoda nie pojawia się w checkout, sprawdź: czy jest aktywna (3a), czy dodana do kanału (3b), czy waluta koszyka to <strong>PLN</strong> oraz czy koszyk/kraj spełnia ewentualne reguły dostępności.</p>
+</blockquote>
+<hr />
+<h2 id="krok-4-konfiguracja-patnosci-karta">Krok 4 — Konfiguracja płatności kartą<a class="headerlink" href="#krok-4-konfiguracja-patnosci-karta" title="Permanent link">&para;</a></h2>
+<p>Wtyczka dokłada do konfiguracji kartę <strong>Ustawienia wyświetlania</strong> (wspólną dla wszystkich płatności Crehler). Tu decydujesz, jak wygląda płatność kartą i BLIK.</p>
+<table>
+<thead>
+<tr>
+<th>Opcja</th>
+<th>Działanie</th>
+<th>Domyślnie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Osadź formularz karty w checkout</strong></td>
+<td>Wł.: pola karty pojawiają się <strong>bezpośrednio w checkout</strong> sklepu. Wył.: klient jest <strong>przekierowany</strong> na stronę płatności Tpay.</td>
+<td>Wyłączone (przekierowanie)</td>
+</tr>
+<tr>
+<td><strong>Pozycja pola kodu BLIK</strong></td>
+<td>Gdzie pokazać pole na kod BLIK: <em>Na stronie potwierdzenia zamówienia</em> / <em>Na osobnej stronie po złożeniu</em> / <em>Ukryte (przekierowanie do bramki)</em>.</td>
+<td>Na stronie potwierdzenia</td>
+</tr>
+<tr>
+<td><strong>Opis transakcji</strong></td>
+<td>Tekst wysyłany do bramki. Tokeny: <code>{{ orderNumber }}</code>, <code>{{ customerName }}</code>, <code>{{ salesChannelName }}</code>.</td>
+<td><code>{{ orderNumber }}</code></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Konfiguracja wtyczki, karta Ustawienia wyświetlania — przełącznik Osadź formularz karty w checkout, lista Pozycja pola kodu BLIK i pole Opis transakcji" src="../images/10-config-display-settings.png" /></p>
+<h3 id="tryb-domyslny-przekierowanie-zalecany">Tryb domyślny: przekierowanie (zalecany)<a class="headerlink" href="#tryb-domyslny-przekierowanie-zalecany" title="Permanent link">&para;</a></h3>
+<p>Formularz karty jest hostowany przez Tpay. Klient wpisuje dane karty na stronie Tpay i wraca do sklepu. Najprostszy i najbezpieczniejszy wariant pod kątem zgodności (dane karty nigdy nie trafiają na Twoją stronę).</p>
+<h3 id="tryb-osadzony-formularz-karty-w-checkout">Tryb osadzony: formularz karty w checkout<a class="headerlink" href="#tryb-osadzony-formularz-karty-w-checkout" title="Permanent link">&para;</a></h3>
+<p>Po włączeniu <strong>„Osadź formularz karty w checkout"</strong> (i podaniu <strong>klucza publicznego Cards API</strong>) pola numeru karty, daty i CVC pojawiają się wprost w checkout. Dane są <strong>szyfrowane po stronie przeglądarki</strong> (RSA, kluczem publicznym Tpay) jeszcze przed wysyłką — do sklepu i do Tpay trafia już tylko zaszyfrowana wartość.</p>
+<blockquote>
+<p>🔐 <strong>Ważne — odpowiedzialność za zgodność (PCI DSS).</strong> W trybie osadzonym <strong>formularz karty jest częścią DOM Twojego sklepu</strong> (pola i kod renderują się na Twojej stronie), a nie w izolowanej ramce hostowanej przez Tpay. Oznacza to, że to <strong>Ty odpowiadasz za środowisko, w którym wpisywane są dane karty</strong>, i obejmuje Cię szerszy zakres wymogów PCI DSS (typowo <strong>SAQ A-EP</strong> zamiast SAQ A właściwego dla rozwiązań w pełni hostowanych/iframe). W praktyce:</p>
+<ul>
+<li>sklep musi działać po <strong>HTTPS</strong> na wszystkich stronach checkout,</li>
+<li><strong>nie modyfikuj</strong> kodu formularza karty ani sposób szyfrowania dostarczonego przez wtyczkę,</li>
+<li>zadbaj o aktualizacje, nagłówki bezpieczeństwa (CSP) i ochronę przed wstrzyknięciem skryptów,</li>
+<li>skonsultuj wymagany <strong>typ SAQ</strong> ze swoim agentem rozliczeniowym / Tpay.</li>
+</ul>
+<p>Jeśli nie chcesz przyjmować tej odpowiedzialności — zostaw <strong>tryb przekierowania</strong> (domyślny).</p>
+</blockquote>
+<p><img alt="Checkout sklepu z wybraną Kartą i osadzonym formularzem — Numer karty, Miesiąc, Rok, Kod CVC oraz opcja Zapisz dane do kolejnych płatności" src="../images/11-storefront-embedded-card.png" /></p>
+<hr />
+<h2 id="krok-5-test-patnosci">Krok 5 — Test płatności<a class="headerlink" href="#krok-5-test-patnosci" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Włącz <strong>Tryb sandbox</strong> i zapisz konfigurację (Krok 2b).</li>
+<li>Dodaj produkt do koszyka (waluta <strong>PLN</strong>) i przejdź do checkout.</li>
+<li>Wybierz metodę Tpay (np. <strong>BLIK</strong>) i dokończ zamówienie zgodnie z instrukcjami konta testowego Tpay.</li>
+<li>Sprawdź w panelu Shopware, czy status płatności zamówienia zmienił się na <strong>Opłacone</strong> po potwierdzeniu.</li>
+</ol>
+<p><img alt="Checkout z zaznaczonym Przelew online i rozwiniętą listą banków pay-by-link" src="../images/12-storefront-checkout-methods.png" /></p>
+<blockquote>
+<p>↩️ <strong>Zwroty</strong> wykonasz później z poziomu zamówienia w panelu Shopware — pełne lub częściowe, bez logowania do panelu Tpay. Szczegóły: <a href="../zwroty/">Zwroty płatności</a>.</p>
+</blockquote>
+<hr />
+<h2 id="dane-testowe-sandbox">Dane testowe (sandbox)<a class="headerlink" href="#dane-testowe-sandbox" title="Permanent link">&para;</a></h2>
+<h3 id="blik-kody-testowe">BLIK — kody testowe<a class="headerlink" href="#blik-kody-testowe" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Kod testowy <strong>musi zaczynać się od <code>777</code></strong> (np. <code>777654</code>).</li>
+<li><strong>Kwota</strong> transakcji wymusza konkretną odpowiedź BLIK (symulacja statusów Polskiego Standardu Płatności), niezależnie od poprawności kodu — do testów ścieżek błędów:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Kwota</th>
+<th>Kod odpowiedzi</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>80,88</code></td>
+<td><code>SUCCESS</code> / <code>AUTHORIZED</code></td>
+<td>płatność udana</td>
+</tr>
+<tr>
+<td><code>81,88</code></td>
+<td><code>BAD_PIN</code></td>
+<td>błędny PIN</td>
+</tr>
+<tr>
+<td><code>82,88</code></td>
+<td><code>INSUFFICIENT_FUNDS</code></td>
+<td>brak środków</td>
+</tr>
+<tr>
+<td><code>83,88</code></td>
+<td><code>ISSUER_DECLINED</code></td>
+<td>odrzucone przez bank</td>
+</tr>
+<tr>
+<td><code>84,88</code></td>
+<td><code>LIMIT_EXCEEDED</code></td>
+<td>przekroczony limit</td>
+</tr>
+<tr>
+<td><code>85,88</code></td>
+<td><code>SEC_DECLINED</code></td>
+<td>odrzucone (bezpieczeństwo)</td>
+</tr>
+<tr>
+<td><code>86,88</code></td>
+<td><code>SYSTEM_ERROR</code></td>
+<td>błąd systemu</td>
+</tr>
+<tr>
+<td><code>87,88</code></td>
+<td><code>GENERAL_ERROR</code></td>
+<td>błąd ogólny</td>
+</tr>
+<tr>
+<td><code>88,88</code></td>
+<td><code>RET_LATE</code></td>
+<td>zwrot po terminie</td>
+</tr>
+<tr>
+<td><code>89,88</code></td>
+<td><code>RET_AMT_EXCEEDED</code></td>
+<td>przekroczona kwota zwrotu</td>
+</tr>
+<tr>
+<td><code>90,88</code></td>
+<td><code>ALIAS_DECLINED</code></td>
+<td>odrzucony alias (zapamiętany BLIK)</td>
+</tr>
+<tr>
+<td><code>91,88</code></td>
+<td><code>TIMEOUT</code></td>
+<td>przekroczony czas</td>
+</tr>
+<tr>
+<td><code>92,88</code></td>
+<td><code>OFFUS_NOT_ALLOWED</code></td>
+<td>transakcja OFFUS niedozwolona</td>
+</tr>
+<tr>
+<td><code>93,88</code></td>
+<td><code>ISS_OUTOFSERVICE</code></td>
+<td>bank niedostępny</td>
+</tr>
+<tr>
+<td><code>94,88</code></td>
+<td>—</td>
+<td>brak odpowiedzi synchronicznej</td>
+</tr>
+</tbody>
+</table>
+<h3 id="karta-numery-testowe">Karta — numery testowe<a class="headerlink" href="#karta-numery-testowe" title="Permanent link">&para;</a></h3>
+<p>Przykładowe karty testowe (16-cyfrowe), dowolna <strong>przyszła</strong> data ważności i dowolny kod <strong>CVC</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Numer karty</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>2223 0002 8000 0016</code></td>
+</tr>
+<tr>
+<td><code>4056 2178 4359 7258</code></td>
+</tr>
+<tr>
+<td><code>5204 7400 0000 1002</code></td>
+</tr>
+<tr>
+<td><code>5457 2100 0200 1016</code></td>
+</tr>
+<tr>
+<td><code>4012 0010 3714 1112</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Zachowanie 3-D Secure zależy od ostatniej cyfry kwoty:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Końcówka kwoty</th>
+<th>Zachowanie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>…1</code></td>
+<td>frictionless (bez dodatkowej weryfikacji 3DS)</td>
+</tr>
+<tr>
+<td><code>…3</code></td>
+<td>udane powiadomienie metody (method notification)</td>
+</tr>
+<tr>
+<td><code>…5</code></td>
+<td>nieudane powiadomienie metody</td>
+</tr>
+<tr>
+<td><code>…6</code></td>
+<td>transakcja odrzucona</td>
+</tr>
+<tr>
+<td>pozostałe</td>
+<td>wymagane wyzwanie 3DS (challenge)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kwoty wymuszające błąd</strong> (dla wszystkich kart): <code>500.00</code>, <code>501.00</code>, <code>503.00</code>.</p>
+<h3 id="przelew-pay-by-link">Przelew (pay-by-link)<a class="headerlink" href="#przelew-pay-by-link" title="Permanent link">&para;</a></h3>
+<p>W sandboxie wybierasz bank tak jak na produkcji. Płatność porzucona pozostaje w statusie <strong>oczekującym</strong> — banki nie raportują porzucenia transakcji (zachowanie jak na produkcji).</p>
+<blockquote>
+<p>ℹ️ Dane testowe pochodzą z dokumentacji Tpay i mogą się zmieniać. Aktualną, pełną listę znajdziesz na <strong><a href="https://support.tpay.com/sprzedawca/srodowisko-testowe-sandbox">support.tpay.com → Środowisko testowe (sandbox)</a></strong>.</p>
+</blockquote>
+<hr />
+<h2 id="powiazane-artykuy">Powiązane artykuły<a class="headerlink" href="#powiazane-artykuy" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><a href="../store-api/">Integracja przez Store API (headless)</a></strong> — endpointy Store API (BLIK Level 0, sub-metody banków, sprawdzanie statusu) i przykłady użycia.</li>
+<li><strong><a href="../zwroty/">Zwroty płatności</a></strong> — pełne i częściowe zwroty z poziomu panelu Shopware.</li>
+</ul>
+<hr />
+<h2 id="wsparcie">Wsparcie<a class="headerlink" href="#wsparcie" title="Permanent link">&para;</a></h2>
+<p>Masz pytanie lub problem z konfiguracją? Napisz do nas: <strong><a href="mailto:support@crehler.com">support@crehler.com</a></strong></p>
+<p align="center"><sub>Bramka płatności <strong>Tpay by CREHLER</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Powrót do góry
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © Crehler Sp. z o.o.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://crehler.com/" target="_blank" rel="noopener" title="crehler.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.top", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Skopiowano do schowka", "clipboard.copy": "Kopiuj do schowka", "search.result.more.one": "1 wi\u0119cej na tej stronie", "search.result.more.other": "# wi\u0119cej na tej stronie", "search.result.none": "Brak wynik\u00f3w wyszukiwania", "search.result.one": "Wyniki wyszukiwania: 1", "search.result.other": "Wyniki wyszukiwania: #", "search.result.placeholder": "Zacznij pisa\u0107, aby szuka\u0107", "search.result.term.missing": "Brak", "select.version": "Wybierz wersj\u0119"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
