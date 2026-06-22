@@ -1,0 +1,25 @@
+{
+  "base": "/bundles/crehlertpay/administration/",
+  "entryPoints": {
+    "crehler-tpay": {
+      "css": [
+        "/bundles/crehlertpay/administration/css/crehler-tpay.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/bundles/crehlertpay/administration/js/crehler-tpay.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.0.4",
+    7,
+    0,
+    4
+  ],
+  "viteServer": null
+}

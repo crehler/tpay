@@ -1,0 +1,134 @@
+{#
+  Tpay card form — single source for both render contexts:
+    - embedded after the payment-method list (payment-form.html.twig), showHeader = false
+    - inline under the selected card method (payment-method.html.twig),  showHeader = true
+
+  Expects `selectedCardPayment` (the Tpay card PaymentMethodEntity) in context.
+
+  Params:
+    showHeader (bool)  render the card header (icon + title + subtitle), default false
+#}
+{% set showHeader = showHeader|default(false) %}
+{% set savedCards = selectedCardPayment.extensions[constant('Crehler\\PaymentBundle\\Infrastructure\\StoreApi\\CustomerSavedCard\\SavedCardTokenResponse::API_ALIAS')] %}
+{% set tpayCardForm = page.extensions[constant('Crehler\\Tpay\\Struct\\TpayCardFormStruct::API_ALIAS')] %}
+{% set currentYear = "now"|date("Y") %}
+{% set fieldIdSuffix = showHeader ? 'inline' : 'embedded' %}
+
+<div class="tpay-card-payment-container"
+     data-saved-card-selector="true"
+     {% if tpayCardForm %}data-tpay-card-form="true"{% endif %}>
+
+    {% if showHeader %}
+        <div class="tpay-card-header">
+            <span class="tpay-card-header-icon">
+                {% sw_icon 'money-card' style { size: 'md' } %}
+            </span>
+            <div class="tpay-card-header-text">
+                <strong class="tpay-card-header-title">{{ "tpay.card.title"|trans }}</strong>
+                <small class="tpay-card-header-subtitle">{{ "tpay.card.subtitle"|trans }}</small>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not tpayCardForm %}
+        <div class="tpay-card-info">
+            {% sw_icon 'external-link' style { size: 'xs' } %}
+            <span>{{ "tpay.card.redirectInfo"|trans }}</span>
+        </div>
+    {% endif %}
+
+    {% if savedCards is not empty %}
+        {% sw_include '@CrehlerPaymentBundle/storefront/component/payment/saved-cards-dropdown.html.twig' with {
+            savedCards: savedCards,
+            wrapperClass: 'tpay-saved-cards',
+            labelClass: 'tpay-saved-cards-label',
+            labelText: "tpay.card.savedCards"|trans,
+            placeholderText: "tpay.card.selectSavedCard"|trans,
+            placeholderIcon: 'credit-card',
+            showNewCardOption: true,
+            newCardText: "tpay.card.useNewCard"|trans,
+            newCardClass: 'tpay-new-card-option',
+            showExpiry: true,
+        } only %}
+    {% endif %}
+
+    <input type="hidden" name="tpayCardToken" id="tpayCardToken" data-saved-card-token form="confirmOrderForm" value="">
+
+    {% if tpayCardForm %}
+        <input type="hidden" name="tpayCardEncrypted" form="confirmOrderForm" data-tpay-encrypted-card value="">
+        <input type="hidden" data-tpay-cards-api value="{{ tpayCardForm.cardsApiPublicKey }}">
+
+        <div data-tpay-card-data class="tpay-card-data">
+            <div class="mb-3" data-tpay-field>
+                <label class="form-label" for="tpay-card-number-{{ fieldIdSuffix }}">{{ "tpay.card.number"|trans }}</label>
+                <input type="text"
+                       id="tpay-card-number-{{ fieldIdSuffix }}"
+                       class="form-control"
+                       autocomplete="cc-number"
+                       inputmode="numeric"
+                       placeholder="0000 0000 0000 0000"
+                       data-tpay-card-number
+                       data-validation-error="{{ 'tpay.card.validation.number'|trans }}">
+                <div data-tpay-error-container></div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4" data-tpay-field>
+                    <label class="form-label" for="tpay-card-expiration-month-{{ fieldIdSuffix }}">{{ "tpay.card.expirationMonth"|trans }}</label>
+                    <select class="form-select"
+                            id="tpay-card-expiration-month-{{ fieldIdSuffix }}"
+                            autocomplete="cc-exp-month"
+                            data-tpay-expiration-month
+                            data-validation-error="{{ 'tpay.card.validation.expiration'|trans }}">
+                        <option value="">--</option>
+                        {% for m in 1..12 %}<option value="{{ '%02d'|format(m) }}">{{ '%02d'|format(m) }}</option>{% endfor %}
+                    </select>
+                    <div data-tpay-error-container></div>
+                </div>
+                <div class="col-md-4" data-tpay-field>
+                    <label class="form-label" for="tpay-card-expiration-year-{{ fieldIdSuffix }}">{{ "tpay.card.expirationYear"|trans }}</label>
+                    <select class="form-select"
+                            id="tpay-card-expiration-year-{{ fieldIdSuffix }}"
+                            autocomplete="cc-exp-year"
+                            data-tpay-expiration-year
+                            data-validation-error="{{ 'tpay.card.validation.expiration'|trans }}">
+                        <option value="">----</option>
+                        {% for y in currentYear..(currentYear + 10) %}<option value="{{ y }}">{{ y }}</option>{% endfor %}
+                    </select>
+                    <div data-tpay-error-container></div>
+                </div>
+                <div class="col-md-4" data-tpay-field>
+                    <label class="form-label" for="tpay-card-cvc-{{ fieldIdSuffix }}">{{ "tpay.card.cvc"|trans }}</label>
+                    <input type="text"
+                           id="tpay-card-cvc-{{ fieldIdSuffix }}"
+                           class="form-control"
+                           autocomplete="cc-csc"
+                           inputmode="numeric"
+                           maxlength="4"
+                           placeholder="***"
+                           data-tpay-cvc
+                           data-validation-error="{{ 'tpay.card.validation.cvc'|trans }}">
+                    <div data-tpay-error-container></div>
+                </div>
+            </div>
+
+            <div data-tpay-global-error></div>
+
+            <noscript>
+                <div class="alert alert-warning">{{ "tpay.card.noscript"|trans }}</div>
+            </noscript>
+        </div>
+    {% endif %}
+
+    {% if context.customer and not context.customer.guest %}
+        <div class="tpay-save-card-consent form-check" data-save-card-wrapper>
+            <input type="checkbox" class="form-check-input" name="tpaySaveCard" id="tpaySaveCard-{{ fieldIdSuffix }}" form="confirmOrderForm" value="on">
+            <label class="form-check-label" for="tpaySaveCard-{{ fieldIdSuffix }}">{{ "tpay.card.saveCard"|trans }}</label>
+        </div>
+    {% endif %}
+
+    <div class="tpay-security-info">
+        {% sw_icon 'lock' style { size: 'xs' } %}
+        <span>{{ "tpay.card.securePayment"|trans }}</span>
+    </div>
+</div>

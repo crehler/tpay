@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>Production credentials</title>
+        <title lang="pl-PL">Dane produkcyjne</title>
+        <title lang="de-DE">Produktionsdaten</title>
+        <input-field type="password">
+            <name>clientId</name>
+            <label>Client ID</label>
+            <label lang="pl-PL">Client ID</label>
+            <label lang="de-DE">Client ID</label>
+            <helpText>Tpay merchant panel: Integration → API → Open API Keys → "Client ID".</helpText>
+            <helpText lang="pl-PL">Panel Tpay: Integracja → API → Klucze Open API → pole „Client ID".</helpText>
+            <helpText lang="de-DE">Tpay-Händlerpanel: Integration → API → Open-API-Schlüssel → „Client ID".</helpText>
+        </input-field>
+        <input-field type="password">
+            <name>clientSecret</name>
+            <label>Client Secret (panel: "Secret")</label>
+            <label lang="pl-PL">Client Secret (w panelu: „Secret")</label>
+            <label lang="de-DE">Client Secret (Panel: „Secret")</label>
+            <helpText>Tpay merchant panel: Integration → API → Open API Keys → "Secret" (shown next to the Client ID).</helpText>
+            <helpText lang="pl-PL">Panel Tpay: Integracja → API → Klucze Open API → pole „Secret" (obok Client ID).</helpText>
+            <helpText lang="de-DE">Tpay-Händlerpanel: Integration → API → Open-API-Schlüssel → „Secret" (neben der Client ID).</helpText>
+        </input-field>
+        <input-field type="password">
+            <name>securityCode</name>
+            <label>Notification security code (required)</label>
+            <label lang="pl-PL">Kod bezpieczeństwa powiadomień (wymagane)</label>
+            <label lang="de-DE">Sicherheitscode für Benachrichtigungen (erforderlich)</label>
+            <helpText>Tpay merchant panel: Settings → Notifications → Security → "Security code". Required: standard payment notifications are verified by their MD5 checksum using this code (in addition to the mandatory JWS signature). Without it confirmations are rejected and orders stay unpaid.</helpText>
+            <helpText lang="pl-PL">Panel Tpay: Ustawienia → Powiadomienia → Bezpieczeństwo → „Kod bezpieczeństwa". Wymagane: standardowe powiadomienia o płatności są weryfikowane sumą MD5 z tym kodem (obok obowiązkowego podpisu JWS). Bez niego potwierdzenia są odrzucane, a zamówienia pozostają nieopłacone.</helpText>
+            <helpText lang="de-DE">Tpay-Händlerpanel: Einstellungen → Benachrichtigungen → Sicherheit → „Sicherheitscode". Erforderlich: Standard-Zahlungsbenachrichtigungen werden über ihre MD5-Prüfsumme mit diesem Code verifiziert (zusätzlich zur obligatorischen JWS-Signatur). Ohne ihn werden Bestätigungen abgelehnt und Bestellungen bleiben unbezahlt.</helpText>
+        </input-field>
+        <input-field type="textarea">
+            <name>cardsApiPublicKey</name>
+            <label>Cards API public key (base64)</label>
+            <label lang="pl-PL">Klucz publiczny Cards API (base64)</label>
+            <label lang="de-DE">Cards-API-Public-Key (base64)</label>
+            <helpText>Tpay merchant panel: "Cards API" section → public key (base64, starts with "LS0t…"). Required only when "Embed card form in checkout" is enabled.</helpText>
+            <helpText lang="pl-PL">Panel Tpay: sekcja „Cards API" → klucz publiczny (base64, zaczyna się od „LS0t…"). Wymagane tylko, gdy włączysz „Osadź formularz karty w checkout".</helpText>
+            <helpText lang="de-DE">Tpay-Händlerpanel: Bereich „Cards API" → Public Key (base64, beginnt mit „LS0t…"). Nur erforderlich, wenn „Kartenformular im Checkout einbetten" aktiviert ist.</helpText>
+        </input-field>
+        <component name="cr-payment-test-connection">
+            <name>liveCheckCredentials</name>
+        </component>
+    </card>
+    <card>
+        <title>Sandbox credentials</title>
+        <title lang="pl-PL">Dane sandbox</title>
+        <title lang="de-DE">Sandbox-Daten</title>
+        <input-field type="bool">
+            <name>enableSandbox</name>
+            <label>Sandbox mode</label>
+            <label lang="pl-PL">Tryb sandbox</label>
+            <label lang="de-DE">Sandbox-Modus</label>
+            <helpText>Enable only for a Tpay sandbox (test) account. When enabled, the sandbox credentials below are used instead of the production ones.</helpText>
+            <helpText lang="pl-PL">Włącz tylko dla testowego konta Tpay (sandbox). Gdy włączone, używane są dane sandbox poniżej zamiast produkcyjnych.</helpText>
+            <helpText lang="de-DE">Nur für ein Tpay-Sandbox-(Test-)Konto aktivieren. Wenn aktiviert, werden die untenstehenden Sandbox-Daten anstelle der Produktionsdaten verwendet.</helpText>
+        </input-field>
+        <input-field type="password">
+            <name>sandboxClientId</name>
+            <label>Client ID (sandbox)</label>
+            <label lang="pl-PL">Client ID (sandbox)</label>
+            <label lang="de-DE">Client ID (Sandbox)</label>
+            <helpText>Tpay sandbox panel: Integration → API → Open API Keys → "Client ID".</helpText>
+            <helpText lang="pl-PL">Panel sandbox Tpay: Integracja → API → Klucze Open API → pole „Client ID".</helpText>
+            <helpText lang="de-DE">Tpay-Sandbox-Panel: Integration → API → Open-API-Schlüssel → „Client ID".</helpText>
+        </input-field>
+        <input-field type="password">
+            <name>sandboxClientSecret</name>
+            <label>Client Secret (sandbox)</label>
+            <label lang="pl-PL">Client Secret (sandbox)</label>
+            <label lang="de-DE">Client Secret (Sandbox)</label>
+            <helpText>Tpay sandbox panel: Integration → API → Open API Keys → "Secret".</helpText>
+            <helpText lang="pl-PL">Panel sandbox Tpay: Integracja → API → Klucze Open API → pole „Secret".</helpText>
+            <helpText lang="de-DE">Tpay-Sandbox-Panel: Integration → API → Open-API-Schlüssel → „Secret".</helpText>
+        </input-field>
+        <input-field type="password">
+            <name>sandboxSecurityCode</name>
+            <label>Notification security code (sandbox)</label>
+            <label lang="pl-PL">Kod bezpieczeństwa powiadomień (sandbox)</label>
+            <label lang="de-DE">Sicherheitscode für Benachrichtigungen (Sandbox)</label>
+            <helpText>Tpay sandbox panel: Settings → Notifications → Security → "Security code".</helpText>
+            <helpText lang="pl-PL">Panel sandbox Tpay: Ustawienia → Powiadomienia → Bezpieczeństwo → „Kod bezpieczeństwa".</helpText>
+            <helpText lang="de-DE">Tpay-Sandbox-Panel: Einstellungen → Benachrichtigungen → Sicherheit → „Sicherheitscode".</helpText>
+        </input-field>
+        <input-field type="textarea">
+            <name>sandboxCardsApiPublicKey</name>
+            <label>Cards API public key (base64, sandbox)</label>
+            <label lang="pl-PL">Klucz publiczny Cards API (base64, sandbox)</label>
+            <label lang="de-DE">Cards-API-Public-Key (base64, Sandbox)</label>
+            <helpText>Tpay sandbox panel: "Cards API" section → public key. Required only when "Embed card form in checkout" is enabled.</helpText>
+            <helpText lang="pl-PL">Panel sandbox Tpay: sekcja „Cards API" → klucz publiczny. Wymagane tylko, gdy włączysz „Osadź formularz karty w checkout".</helpText>
+            <helpText lang="de-DE">Tpay-Sandbox-Panel: Bereich „Cards API" → Public Key. Nur erforderlich, wenn „Kartenformular im Checkout einbetten" aktiviert ist.</helpText>
+        </input-field>
+        <component name="cr-payment-test-connection">
+            <name>sandboxCheckCredentials</name>
+        </component>
+    </card>
+</config>

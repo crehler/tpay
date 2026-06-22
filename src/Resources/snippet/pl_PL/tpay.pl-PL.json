@@ -1,0 +1,53 @@
+{
+    "tpay": {
+        "card": {
+            "paymentMethod": "Płatność kartą",
+            "description": "Zapłać kartą kredytową lub debetową",
+            "title": "Płatność kartą",
+            "subtitle": "Dane karty są szyfrowane i przekazywane bezpośrednio do Tpay.",
+            "redirectInfo": "Po kliknięciu „Zamawiam i płacę” zostaniesz przekierowany na bezpieczną stronę płatności Tpay",
+            "savedCards": "Zapisane karty",
+            "selectSavedCard": "Wybierz zapisaną kartę",
+            "useNewCard": "Użyj nowej karty",
+            "securePayment": "Bezpieczna płatność szyfrowana SSL",
+            "deleteCard": "Usuń kartę",
+            "noSavedCards": "Brak zapisanych kart",
+            "saveCard": "Zapisz kartę na przyszłe płatności",
+            "number": "Numer karty",
+            "cvc": "Kod CVC",
+            "expirationMonth": "Miesiąc",
+            "expirationYear": "Rok",
+            "noscript": "Włącz JavaScript lub wybierz inną metodę płatności, aby zapłacić kartą.",
+            "validation": {
+                "number": "Podaj prawidłowy 16-cyfrowy numer karty",
+                "cvc": "Podaj prawidłowy 3- lub 4-cyfrowy kod CVC",
+                "expiration": "Podaj prawidłową datę ważności"
+            }
+        },
+        "blik": {
+            "paymentMethod": "BLIK",
+            "description": "Wprowadź kod BLIK z aplikacji bankowej",
+            "codeLabel": "Kod BLIK",
+            "codePlaceholder": "Wprowadź 6-cyfrowy kod"
+        },
+        "bank": {
+            "paymentMethod": "Przelew online",
+            "description": "Wybierz bank i dokonaj płatności",
+            "selectBank": "Wybierz swój bank"
+        },
+        "consent": {
+            "title": "Tpay",
+            "content": "Płatność obsługiwana przez Krajowy Integrator Płatności S.A."
+        },
+        "checkPayment": {
+            "title": "Przetwarzanie płatności",
+            "description": "Twoja płatność jest przetwarzana przez Tpay. Prosimy czekać...",
+            "redirecting": "Przekierowywanie do bramki płatności...",
+            "waiting": "Oczekiwanie na potwierdzenie płatności..."
+        },
+        "transition": {
+            "title": "Przekierowanie do Tpay",
+            "description": "Za chwilę zostaniesz przekierowany na stronę płatności Tpay..."
+        }
+    }
+}

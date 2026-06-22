@@ -1,0 +1,20 @@
+{% sw_extends '@CrehlerPaymentBundle/storefront/component/payment/payment-method.html.twig' %}
+
+{% block component_payment_method_label %}
+    {{ parent() }}
+
+    {% set checkoutBundleExt = page.extensions[constant('Crehler\\PaymentBundle\\Infrastructure\\Struct\\CheckoutConfirmPageExtensionStruct::API_ALIAS')] %}
+    {% set crPaymentType = payment.extensions[constant('Crehler\\PaymentBundle\\Infrastructure\\Struct\\PaymentMethodTypeStruct::API_ALIAS')] %}
+
+    {# Inline Tpay card form under the selected card payment method — gated by embedCardForm toggle #}
+    {% if checkoutBundleExt
+        and checkoutBundleExt.embedCardForm
+        and crPaymentType and crPaymentType.isCard
+        and context.paymentMethod.id is same as(payment.id)
+        and 'Crehler\\Tpay\\Handler\\CardHandler' in payment.handlerIdentifier %}
+        {% set selectedCardPayment = payment %}
+        {% sw_include '@CrehlerTpay/storefront/component/payment/card-form.html.twig' with {
+            showHeader: true
+        } %}
+    {% endif %}
+{% endblock %}

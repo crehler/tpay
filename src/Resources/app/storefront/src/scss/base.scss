@@ -1,0 +1,247 @@
+
+// Tpay Card Form - themed container matching bank sub-methods aesthetic
+.tpay-card-payment-container {
+  border: 1px solid var(--payment-submethod-border);
+  border-radius: var(--payment-submethod-radius);
+  background: var(--payment-submethod-bg);
+  padding: 20px;
+  animation: fadeSlideIn 0.3s ease-out;
+}
+
+.tpay-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--payment-submethod-border);
+
+  .tpay-card-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: var(--payment-submethod-bg-hover);
+    color: var(--payment-submethod-border-selected);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .tpay-card-header-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+
+  .tpay-card-header-title {
+    font-size: 15px;
+    color: #111827;
+  }
+
+  .tpay-card-header-subtitle {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 2px;
+  }
+}
+
+.tpay-saved-cards {
+  margin-bottom: 16px;
+
+  .tpay-saved-cards-label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+
+  .dropdown-toggle.cr-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid var(--payment-submethod-border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    transition: border-color var(--payment-submethod-transition),
+                box-shadow var(--payment-submethod-transition);
+
+    &:hover {
+      border-color: var(--payment-submethod-border-hover);
+    }
+
+    &:focus,
+    &[aria-expanded='true'] {
+      border-color: var(--payment-submethod-border-selected);
+      box-shadow: 0 0 0 3px var(--payment-submethod-glow);
+      outline: none;
+    }
+
+    // Keep Bootstrap's caret on the same line, pushed to the right edge.
+    &::after {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+  }
+
+  .saved-card-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 400;
+
+    .saved-card-placeholder,
+    .saved-card-selected {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    border-radius: 6px;
+    border-color: var(--payment-submethod-border);
+    padding: 4px;
+  }
+
+  .cr-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--payment-submethod-bg-hover);
+    }
+  }
+}
+
+.tpay-card-data {
+  .form-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 4px;
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 6px;
+    border: 1px solid var(--payment-submethod-border);
+    padding: 10px 12px;
+    font-size: 14px;
+    transition: border-color var(--payment-submethod-transition),
+                box-shadow var(--payment-submethod-transition);
+
+    &:hover {
+      border-color: var(--payment-submethod-border-hover);
+    }
+
+    &:focus {
+      border-color: var(--payment-submethod-border-selected);
+      box-shadow: 0 0 0 3px var(--payment-submethod-glow);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  [data-tpay-error-container] {
+    color: #b42318;
+    font-size: 12px;
+    margin-top: 4px;
+    min-height: 0;
+
+    &:not(:empty) {
+      margin-top: 6px;
+    }
+  }
+}
+
+.tpay-save-card-consent {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--payment-submethod-border);
+
+  .form-check-input {
+    &:focus {
+      border-color: var(--payment-submethod-border-selected);
+      box-shadow: 0 0 0 3px var(--payment-submethod-glow);
+    }
+
+    &:checked {
+      background-color: var(--payment-submethod-border-selected);
+      border-color: var(--payment-submethod-border-selected);
+    }
+  }
+
+  .form-check-label {
+    font-size: 13px;
+    color: #374151;
+  }
+}
+
+.tpay-card-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--payment-submethod-bg-hover);
+  border: 1px solid var(--payment-submethod-border);
+  font-size: 13px;
+  color: #374151;
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--payment-submethod-border-selected);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+.tpay-security-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--payment-submethod-border);
+  font-size: 12px;
+  color: #6c757d;
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}

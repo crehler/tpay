@@ -1,0 +1,14 @@
+name: Auto tag
+
+# Wersjonowaniem zajmuje się publish.yml (manualny dispatch → bump → snapshot na mirror).
+# auto-tag nie odpala się już na push→master, by nie kolidować z release flow
+# (master jest teraz gałęzią roboczą i źródłem release'u).
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    # Tylko na repo źródłowym. Na mirrorze (kod trafia tam force-pushem) ten
+    # workflow musi być uśpiony, by nie tworzyć tagów kolidujących z release flow.
+    if: github.repository == 'crehler-com/CrehlerTpayBundle'
+    uses: crehler-com/CrehlerGithubWorkflows/.github/workflows/auto-tag.yml@master

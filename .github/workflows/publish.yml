@@ -1,0 +1,98 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Wersja x.x.x (puste = auto-bump patcha z composer.json)'
+        required: false
+        type: string
+
+env:
+  # Faza 2 (produkcja): publiczny mirror crehler/tpay.
+  # (Faza 1 testowa była: crehler-com/CrehlerTpayBundle-release.)
+  MIRROR_REPO: crehler/tpay
+  SOURCE_BRANCH: master
+  MIRROR_BRANCH: master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (pełna historia)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.SOURCE_BRANCH }}
+
+      - name: Ustal wersję
+        id: version
+        run: |
+          INPUT="${{ inputs.version }}"
+          if [ -n "$INPUT" ]; then
+            if ! echo "$INPUT" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+              echo "::error::Nieprawidłowy format wersji: '$INPUT' (oczekiwano x.x.x)"
+              exit 1
+            fi
+            VERSION="$INPUT"
+          else
+            CURRENT=$(jq -r '.version' composer.json)
+            if ! echo "$CURRENT" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+              echo "::error::composer.json zawiera nieprawidłową wersję: '$CURRENT'"
+              exit 1
+            fi
+            MAJOR=$(echo "$CURRENT" | cut -d. -f1)
+            MINOR=$(echo "$CURRENT" | cut -d. -f2)
+            PATCH=$(echo "$CURRENT" | cut -d. -f3)
+            VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          fi
+          echo "Nowa wersja: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Zapisz wersję do composer.json
+        run: |
+          sed -i -E "s/(\"version\"[[:space:]]*:[[:space:]]*\")[^\"]*\"/\1${{ steps.version.outputs.version }}\"/" composer.json
+          jq -e '.version == "${{ steps.version.outputs.version }}"' composer.json > /dev/null
+
+      - name: Commit + push do źródła
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add composer.json
+          if git diff --cached --quiet; then
+            echo "composer.json bez zmian (wersja juz ${{ steps.version.outputs.version }}) - pomijam commit do zrodla"
+          else
+            git commit -m "Release ${{ steps.version.outputs.version }}" -m "Assisted-by: CREON"
+            git push origin "HEAD:${{ env.SOURCE_BRANCH }}"
+          fi
+
+      - name: Snapshot wydania na mirror (commit zbiorczy, bez historii dev)
+        run: |
+          # Na mirror trafia JEDEN commit zbiorczy na wydanie (pelny snapshot
+          # drzewa zrodla), a NIE cala historia dev. Lancuch: kazdy nowy commit
+          # doklejamy na poprzedni commit wydania (rozpoznawany po markerze).
+          # extraheader z actions/checkout czyscimy, by git uzyl MIRROR_PAT
+          # z URL-a (inaczej GITHUB_TOKEN repo zrodlowego -> 404 na mirrorze).
+          MIRROR_URL="https://x-access-token:${{ secrets.MIRROR_PAT }}@github.com/${{ env.MIRROR_REPO }}.git"
+          GIT="git -c http.https://github.com/.extraheader="
+          MARKER="X-Mirror-Snapshot: 1"
+
+          TREE=$(git rev-parse "HEAD^{tree}")
+
+          PARENT_ARG=""
+          FORCE=""
+          if $GIT fetch --depth=1 "$MIRROR_URL" "${{ env.MIRROR_BRANCH }}" 2>/dev/null; then
+            TIP=$(git rev-parse FETCH_HEAD)
+            if git log -1 --format='%B' "$TIP" | grep -q "$MARKER"; then
+              PARENT_ARG="-p $TIP"   # mirror juz w modelu snapshot -> doklej do lancucha
+            else
+              FORCE="--force"        # pusty mirror lub stara pelna historia -> czysty start (orphan)
+            fi
+          fi
+
+          COMMIT=$($GIT commit-tree "$TREE" $PARENT_ARG \
+            -m "Release ${{ steps.version.outputs.version }}" \
+            -m "Assisted-by: CREON" \
+            -m "$MARKER")
+
+          $GIT push $FORCE "$MIRROR_URL" "$COMMIT:refs/heads/${{ env.MIRROR_BRANCH }}"

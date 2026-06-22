@@ -1,0 +1,61 @@
+{
+    "name": "crehler/tpay",
+    "description": "Tpay Payment Gateway for Shopware 6",
+    "type": "shopware-platform-plugin",
+    "license": "proprietary",
+    "version": "6.0.0",
+    "authors": [
+        {
+            "name": "Crehler Sp. z o. o.",
+            "email": "support@crehler.com",
+            "homepage": "https://crehler.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@crehler.com"
+    },
+    "autoload": {
+        "psr-4": {
+            "Crehler\\Tpay\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Crehler\\Tpay\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "Crehler\\Tpay\\CrehlerTpay",
+        "plugin-icon": "src/Resources/config/tpay.jpg",
+        "label": {
+            "de-DE": "Zahlungsgateway Tpay by CREHLER",
+            "en-GB": "Payment Gateway Tpay by CREHLER",
+            "pl-PL": "Bramka płatności Tpay by CREHLER"
+        },
+        "description": {
+            "de-DE": "Tpay ist einer der fuhrenden Zahlungsanbieter in Polen.",
+            "en-GB": "Tpay is one of the leading payment providers in Poland.",
+            "pl-PL": "Tpay to jeden z wiodących operatorów płatności w Polsce."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://crehler.com/",
+            "en-GB": "https://crehler.com/",
+            "pl-PL": "https://crehler.com/"
+        },
+        "supportLink": {
+            "de-DE": "https://crehler.com/",
+            "en-GB": "https://crehler.com/",
+            "pl-PL": "https://crehler.com/"
+        }
+    },
+    "require": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "crehler/payment-bundle": "^6.0",
+        "tpay-com/tpay-openapi-php": "^2.4",
+        "shopware/core": "~6.6 || ~6.7"
+    },
+    "require-dev": {
+        "rector/rector": "^2.4"
+    }
+}

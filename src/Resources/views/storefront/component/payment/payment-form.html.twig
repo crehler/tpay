@@ -1,0 +1,9 @@
+{% sw_extends '@CrehlerPaymentBundle/storefront/component/payment/payment-form.html.twig' %}
+
+{% block crehler_payment_method_card_form %}
+    {% if selectedCardPayment and 'Crehler\\Tpay\\Handler\\CardHandler' in selectedCardPayment.handlerIdentifier %}
+        {% sw_include '@CrehlerTpay/storefront/component/payment/card-form.html.twig' with {
+            showHeader: false
+        } %}
+    {% endif %}
+{% endblock %}

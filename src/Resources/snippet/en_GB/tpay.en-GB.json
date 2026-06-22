@@ -1,0 +1,53 @@
+{
+    "tpay": {
+        "card": {
+            "paymentMethod": "Card payment",
+            "description": "Pay with credit or debit card",
+            "title": "Card payment",
+            "subtitle": "Card data is encrypted and sent directly to Tpay.",
+            "redirectInfo": "After clicking 'Order and pay' you will be redirected to the secure Tpay payment page",
+            "savedCards": "Saved cards",
+            "selectSavedCard": "Select a saved card",
+            "useNewCard": "Use a new card",
+            "securePayment": "Secure SSL-encrypted payment",
+            "deleteCard": "Delete card",
+            "noSavedCards": "No saved cards",
+            "saveCard": "Save card for future payments",
+            "number": "Card number",
+            "cvc": "CVC",
+            "expirationMonth": "Month",
+            "expirationYear": "Year",
+            "noscript": "Enable JavaScript or choose a different payment method to pay by card.",
+            "validation": {
+                "number": "Please enter a valid 16-digit card number",
+                "cvc": "Please enter a valid 3 or 4 digit CVC",
+                "expiration": "Please enter a valid expiration date"
+            }
+        },
+        "blik": {
+            "paymentMethod": "BLIK",
+            "description": "Enter BLIK code from your banking app",
+            "codeLabel": "BLIK code",
+            "codePlaceholder": "Enter 6-digit code"
+        },
+        "bank": {
+            "paymentMethod": "Online transfer",
+            "description": "Choose your bank and make a payment",
+            "selectBank": "Select your bank"
+        },
+        "consent": {
+            "title": "Tpay",
+            "content": "Payment processed by Krajowy Integrator Platnosci S.A."
+        },
+        "checkPayment": {
+            "title": "Payment processing",
+            "description": "Your payment is being processed by Tpay. Please wait...",
+            "redirecting": "Redirecting to payment gateway...",
+            "waiting": "Waiting for payment confirmation..."
+        },
+        "transition": {
+            "title": "Redirecting to Tpay",
+            "description": "You will be redirected to the Tpay payment page..."
+        }
+    }
+}

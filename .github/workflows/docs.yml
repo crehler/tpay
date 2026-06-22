@@ -1,0 +1,37 @@
+name: Docs (MkDocs)
+
+# Build i publikacja dokumentacji MkDocs na GitHub Pages.
+#
+# Faza 1 (mirror prywatny): uruchamiane RĘCZNIE (workflow_dispatch) — Pages na
+# prywatnym repo wymaga płatnego planu, więc nie odpalamy tego automatycznie.
+#
+# Faza 2 (mirror publiczny): odkomentuj trigger `push` poniżej i włącz Pages
+# (Settings → Pages → Deploy from branch: gh-pages). Najlepiej, by ten workflow
+# działał na publicznym repo z dokumentacją.
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [master]
+  #   paths:
+  #     - 'docs/**'
+  #     - 'mkdocs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - run: pip install -r docs/requirements.txt
+
+      - name: Build & deploy (gh-pages)
+        run: mkdocs gh-deploy --force

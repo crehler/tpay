@@ -1,0 +1,11 @@
+{
+  "main.js": {
+    "file": "js/crehler-tpay.js",
+    "name": "crehler-tpay",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "css/crehler-tpay.css"
+    ]
+  }
+}

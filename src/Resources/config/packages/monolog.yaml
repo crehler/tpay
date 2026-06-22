@@ -1,0 +1,9 @@
+monolog:
+    channels: ['tpay']
+    handlers:
+        tpay:
+            type: rotating_file
+            path: '%kernel.logs_dir%/tpay_%kernel.environment%.log'
+            level: debug
+            channels: ['tpay']
+            max_files: 7

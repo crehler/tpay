@@ -1,0 +1,53 @@
+{
+    "tpay": {
+        "card": {
+            "paymentMethod": "Kartenzahlung",
+            "description": "Zahlen Sie mit Kredit- oder Debitkarte",
+            "title": "Kartenzahlung",
+            "subtitle": "Kartendaten werden verschlusselt und direkt an Tpay ubertragen.",
+            "redirectInfo": "Nach dem Klick auf 'Bestellen und bezahlen' werden Sie zur sicheren Tpay-Zahlungsseite weitergeleitet",
+            "savedCards": "Gespeicherte Karten",
+            "selectSavedCard": "Gespeicherte Karte auswahlen",
+            "useNewCard": "Neue Karte verwenden",
+            "securePayment": "Sichere SSL-verschlusselte Zahlung",
+            "deleteCard": "Karte loschen",
+            "noSavedCards": "Keine gespeicherten Karten",
+            "saveCard": "Karte fur zukunftige Zahlungen speichern",
+            "number": "Kartennummer",
+            "cvc": "CVC",
+            "expirationMonth": "Monat",
+            "expirationYear": "Jahr",
+            "noscript": "Aktivieren Sie JavaScript oder wahlen Sie eine andere Zahlungsmethode, um mit Karte zu zahlen.",
+            "validation": {
+                "number": "Bitte geben Sie eine gultige 16-stellige Kartennummer ein",
+                "cvc": "Bitte geben Sie einen gultigen 3- oder 4-stelligen CVC ein",
+                "expiration": "Bitte geben Sie ein gultiges Ablaufdatum ein"
+            }
+        },
+        "blik": {
+            "paymentMethod": "BLIK",
+            "description": "Geben Sie den BLIK-Code aus Ihrer Banking-App ein",
+            "codeLabel": "BLIK-Code",
+            "codePlaceholder": "6-stelligen Code eingeben"
+        },
+        "bank": {
+            "paymentMethod": "Online-Uberweisung",
+            "description": "Wahlen Sie Ihre Bank und fuhren Sie die Zahlung durch",
+            "selectBank": "Wahlen Sie Ihre Bank"
+        },
+        "consent": {
+            "title": "Tpay",
+            "content": "Zahlung abgewickelt durch Krajowy Integrator Platnosci S.A."
+        },
+        "checkPayment": {
+            "title": "Zahlungsverarbeitung",
+            "description": "Ihre Zahlung wird von Tpay verarbeitet. Bitte warten...",
+            "redirecting": "Weiterleitung zum Zahlungsgateway...",
+            "waiting": "Warten auf Zahlungsbestatigung..."
+        },
+        "transition": {
+            "title": "Weiterleitung zu Tpay",
+            "description": "Sie werden zur Tpay-Zahlungsseite weitergeleitet..."
+        }
+    }
+}
