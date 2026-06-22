@@ -1,13 +1,11 @@
 site_name: Bramka płatności Tpay by CREHLER — dokumentacja
 site_description: Integracja bramki płatniczej Tpay ze sklepem Shopware 6 (by CREHLER).
 site_author: Crehler Sp. z o.o.
-# Faza 2 (mirror publiczny): ustaw na docelowy adres Pages, np.
-# site_url: https://crehler.github.io/tpay/
+site_url: https://crehler.github.io/tpay/
 
-# Repozytorium źródłowe (faza 1). W fazie 2 zmień na publiczne crehler/tpay.
-repo_url: https://github.com/crehler-com/CrehlerTpayBundle
-repo_name: crehler-com/CrehlerTpayBundle
-edit_uri: edit/master/docs/
+# Publiczny mirror produkcyjny.
+repo_url: https://github.com/crehler/tpay
+repo_name: crehler/tpay
 
 docs_dir: docs
 

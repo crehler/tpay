@@ -2,25 +2,24 @@ name: Docs (MkDocs)
 
 # Build i publikacja dokumentacji MkDocs na GitHub Pages.
 #
-# Faza 1 (mirror prywatny): uruchamiane RĘCZNIE (workflow_dispatch) — Pages na
-# prywatnym repo wymaga płatnego planu, więc nie odpalamy tego automatycznie.
-#
-# Faza 2 (mirror publiczny): odkomentuj trigger `push` poniżej i włącz Pages
-# (Settings → Pages → Deploy from branch: gh-pages). Najlepiej, by ten workflow
-# działał na publicznym repo z dokumentacją.
+# Deploy działa wyłącznie na publicznym mirrorze produkcyjnym (crehler/tpay) —
+# tam, gdzie GitHub Pages jest darmowe. Na prywatnym źródle workflow jest pomijany
+# (guard poniżej). Uruchamia się przy każdym wydaniu (snapshot push -> master)
+# oraz ręcznie. Wymaga: Pages włączone (Settings -> Pages -> Deploy from branch: gh-pages).
 on:
   workflow_dispatch:
-  # push:
-  #   branches: [master]
-  #   paths:
-  #     - 'docs/**'
-  #     - 'mkdocs.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
 
 permissions:
   contents: write
 
 jobs:
   deploy:
+    if: github.repository == 'crehler/tpay'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
