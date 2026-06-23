@@ -3,7 +3,7 @@
     "description": "Tpay Payment Gateway for Shopware 6",
     "type": "shopware-platform-plugin",
     "license": "proprietary",
-    "version": "6.0.1",
+    "version": "6.0.2",
     "authors": [
         {
             "name": "Crehler Sp. z o. o.",
@@ -51,7 +51,7 @@
     },
     "require": {
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
-        "crehler/payment-bundle": "^6.0",
+        "crehler/payment-bundle": "^6.0 >=6.0.1",
         "tpay-com/tpay-openapi-php": "^2.4",
         "shopware/core": "~6.6 || ~6.7"
     },

@@ -93,11 +93,11 @@ final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetails
     private function mapLevel(string $status): string
     {
         return match (strtolower($status)) {
-            'correct', 'paid' => GatewayStatusLevel::PAID,
-            'pending', 'new' => GatewayStatusLevel::PENDING,
-            'error', 'failed', 'expired' => GatewayStatusLevel::FAILED,
-            'chargeback', 'refund' => GatewayStatusLevel::REFUNDED,
-            default => GatewayStatusLevel::UNKNOWN,
+            'correct', 'paid' => GatewayStatusLevel::PAID->value,
+            'pending', 'new' => GatewayStatusLevel::PENDING->value,
+            'error', 'failed', 'expired' => GatewayStatusLevel::FAILED->value,
+            'chargeback', 'refund' => GatewayStatusLevel::REFUNDED->value,
+            default => GatewayStatusLevel::UNKNOWN->value,
         };
     }
 }
