@@ -1095,12 +1095,19 @@
 <p><img alt="Konfiguracja wtyczki, karta Dane produkcyjne — Client ID, Client Secret, Kod bezpieczeństwa powiadomień, Klucz publiczny Cards API i przycisk „Testuj dane produkcyjne&quot;" src="../images/05-config-production.png" /></p>
 <blockquote>
 <p>⚠️ <strong>Wybór kanału sprzedaży.</strong> U góry konfiguracji znajduje się przełącznik kanału sprzedaży. Ustawienia możesz zapisać globalnie („Wszystkie kanały sprzedaży") lub osobno dla wybranego kanału. Jeśli korzystasz z kilku kanałów z różnymi kontami Tpay — ustaw dane per kanał.</p>
+<p>🛑 <strong>Test połączenia NIE zapisuje danych!</strong> Przycisk testu pod kartą jedynie sprawdza poprawność wpisanych danych — <strong>nie zapisuje ich</strong>. Aby je zachować, po teście <strong>osobno kliknij „Zapisz"</strong> (prawy górny róg). Wyjście lub odświeżenie konfiguracji bez zapisania spowoduje utratę wpisanych danych.</p>
 </blockquote>
 <h3 id="2b-dane-sandbox-do-testow">2b. Dane sandbox (do testów)<a class="headerlink" href="#2b-dane-sandbox-do-testow" title="Permanent link">&para;</a></h3>
 <p>Aby płacić na koncie testowym, włącz <strong>Tryb sandbox</strong> i wypełnij kartę <strong>Dane sandbox</strong> danymi z panelu sandbox. Gdy tryb sandbox jest włączony, wtyczka używa danych sandbox zamiast produkcyjnych.</p>
 <p><img alt="Konfiguracja wtyczki, karta Dane sandbox — włączony przełącznik Tryb sandbox, pola sandbox i przycisk „Testuj dane sandbox&quot;" src="../images/06-config-sandbox.png" /></p>
+<blockquote>
+<p>🛑 <strong>Test połączenia NIE zapisuje danych!</strong> Tak samo jak przy danych produkcyjnych — przycisk „Testuj dane sandbox" tylko weryfikuje klucze. Aby je zachować, po teście <strong>osobno kliknij „Zapisz"</strong> (prawy górny róg).</p>
+</blockquote>
 <h3 id="2c-przetestuj-dane">2c. Przetestuj dane<a class="headerlink" href="#2c-przetestuj-dane" title="Permanent link">&para;</a></h3>
-<p>Pod każdą kartą znajduje się przycisk testu: <strong>„Testuj dane produkcyjne"</strong> oraz <strong>„Testuj dane sandbox"</strong>. Kliknij właściwy po wpisaniu danych — wtyczka połączy się z Tpay i potwierdzi, że klucze są poprawne. Na koniec kliknij <strong>„Zapisz"</strong> (prawy górny róg).</p>
+<p>Pod każdą kartą znajduje się przycisk testu: <strong>„Testuj dane produkcyjne"</strong> oraz <strong>„Testuj dane sandbox"</strong>. Kliknij właściwy po wpisaniu danych — wtyczka połączy się z Tpay i potwierdzi, że klucze są poprawne.</p>
+<blockquote>
+<p>🛑 <strong>Pamiętaj: test to nie zapis.</strong> Kliknięcie przycisku testu <strong>nie zapisuje</strong> wpisanych danych — sprawdza je tylko. Dopiero <strong>„Zapisz"</strong> (prawy górny róg) utrwala konfigurację. Wykonaj zapis osobno po udanym teście, zarówno dla danych produkcyjnych, jak i sandbox.</p>
+</blockquote>
 <p><img alt="Komunikat sukcesu po teście połączenia — potwierdzenie poprawnych danych i liczba dostępnych kanałów płatności" src="../images/07-config-test-connection.png" /></p>
 <hr />
 <h2 id="krok-3-przypisz-patnosci-do-kanau-sprzedazy">Krok 3 — Przypisz płatności do kanału sprzedaży<a class="headerlink" href="#krok-3-przypisz-patnosci-do-kanau-sprzedazy" title="Permanent link">&para;</a></h2>

@@ -716,7 +716,11 @@ Kliknij <strong>„Wykonaj zwrot"</strong>. Zwrot zostaje wysłany do Tpay, a je
 <h2 id="zwroty-czesciowe-i-wielokrotne">Zwroty częściowe i wielokrotne<a class="headerlink" href="#zwroty-czesciowe-i-wielokrotne" title="Permanent link">&para;</a></h2>
 <p>Możesz zwrócić część kwoty, a później kolejną — aż do sumy nieprzekraczającej wartości opłaconej transakcji. Każdy zwrot jest osobnym wpisem z własnym statusem, kwotą, powodem i datą, co daje czytelny audyt „co, kiedy i ile" zostało zwrócone.</p>
 <h2 id="zwroty-wykonane-w-panelu-tpay">Zwroty wykonane w panelu Tpay<a class="headerlink" href="#zwroty-wykonane-w-panelu-tpay" title="Permanent link">&para;</a></h2>
-<p>Jeśli zwrot zostanie wykonany <strong>ręcznie w panelu Tpay</strong> (poza sklepem), wtyczka odbierze powiadomienie (webhook) i <strong>zsynchronizuje</strong> stan zwrotu w Shopware, aby widok zamówienia pozostał spójny.</p>
+<p>Tpay rozróżnia dwie sytuacje:</p>
+<ul>
+<li><strong>Zwrot całkowity</strong> wykonany ręcznie w panelu Tpay wysyła powiadomienie (webhook, status <code>CHARGEBACK</code>) — wtyczka odbiera je natychmiast i synchronizuje stan zwrotu w Shopware.</li>
+<li><strong>Zwrot częściowy</strong> wykonany w panelu Tpay <strong>nie zmienia statusu transakcji i nie wysyła żadnego powiadomienia</strong> — to ograniczenie samego API Tpay, nie wtyczki. Takie zwroty są wykrywane przez cykliczne zadanie synchronizujące (uruchamiane co godzinę), które odpytuje Tpay o listę zwrotów i uzupełnia brakujące wpisy w Shopware. Widok zamówienia może więc odzwierciedlić częściowy zwrot panelowy z opóźnieniem do godziny — dla natychmiastowej weryfikacji sprawdź zakładkę „Szczegóły" zamówienia (żywy odczyt z bramki, sekcja „Zwroty") albo panel Tpay bezpośrednio.</li>
+</ul>
 <h2 id="uwagi">Uwagi<a class="headerlink" href="#uwagi" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Zwrot nie cofa samej wysyłki/zamówienia — to wyłącznie zwrot <strong>środków</strong>.</li>
