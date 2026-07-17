@@ -11,21 +11,26 @@ declare(strict_types=1);
 
 namespace Crehler\Tpay\Application\Service;
 
-use Crehler\PaymentBundle\Application\DTO\GatewayDetails\{GatewayPaymentDetails, GatewayStatusLevel};
+use Crehler\PaymentBundle\Application\DTO\GatewayDetails\{GatewayPaymentDetails, GatewayRefundSummary, GatewayStatusLevel};
 use Crehler\PaymentBundle\Application\Port\Driven\GatewayPaymentDetailsProviderInterface;
 use Crehler\PaymentBundle\Domain\Constant\PaymentCustomFields;
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
 use Crehler\Tpay\Handler\{BankHandler, BlikHandler, CardHandler};
 use Crehler\Tpay\Infrastructure\Client\TpayClientFactory;
+use Crehler\Tpay\Refund\TpayRefundApiClient;
+use Crehler\Tpay\Refund\TpayRefundStatusMapper;
 use Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionEntity;
 use Throwable;
 
 use function in_array;
 use function strtolower;
+use function trim;
 
 /**
  * Exposes Tpay transaction details (Open API GET /transactions/{id}) for the admin
- * order "Szczegóły" tab.
+ * order "Szczegóły" tab, including a live refund-status readout (GET
+ * /transactions/{id}/refunds) — a faster, on-demand complement to the hourly
+ * RefundReconciliationTask, not a replacement for it (see WT-905).
  */
 final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetailsProviderInterface
 {
@@ -33,6 +38,7 @@ final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetails
 
     public function __construct(
         private TpayClientFactory $tpayClientFactory,
+        private TpayRefundApiClient $refundApiClient,
         private EnhancedLogger $logger,
     ) {
     }
@@ -56,6 +62,7 @@ final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetails
             $tx = $tpay->transactions()->getTransactionById((string) $gatewayId);
 
             $status = (string) ($tx['status'] ?? 'unknown');
+            $title = isset($tx['title']) ? (string) $tx['title'] : null;
 
             return new GatewayPaymentDetails(
                 provider: 'Tpay',
@@ -66,8 +73,9 @@ final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetails
                 currency: isset($tx['currency']) ? (string) $tx['currency'] : null,
                 method: $this->resolveMethod($tx),
                 createdAt: $tx['date']['creation'] ?? null,
-                title: isset($tx['title']) ? (string) $tx['title'] : null,
+                title: $title,
                 sandbox: !$this->tpayClientFactory->isProductionMode($salesChannelId),
+                refunds: $this->loadRefunds($tpay, (string) $gatewayId, $title),
             );
         } catch (Throwable $e) {
             $this->logger->error('Failed to load Tpay gateway details', [
@@ -78,6 +86,40 @@ final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetails
 
             return null;
         }
+    }
+
+    /**
+     * @return GatewayRefundSummary[]
+     */
+    private function loadRefunds(object $tpay, string $gatewayId, ?string $title): array
+    {
+        try {
+            $rows = $this->refundApiClient->listRefunds($tpay, $gatewayId, $title);
+        } catch (Throwable $e) {
+            // Refund status is a bonus on top of the main transaction details — never
+            // fail the whole "Szczegóły" tab because the refund sub-call errored.
+            $this->logger->warning('Failed to load Tpay refund details', [
+                'gatewayId' => $gatewayId,
+                'exception' => $e->getMessage(),
+            ]);
+
+            return [];
+        }
+
+        $summaries = [];
+
+        foreach ($rows as $row) {
+            $status = strtolower(trim((string) ($row['status'] ?? '')));
+
+            $summaries[] = new GatewayRefundSummary(
+                gatewayRefundId: isset($row['refundId']) ? (string) $row['refundId'] : (isset($row['requestId']) ? (string) $row['requestId'] : null),
+                amount: (float) ($row['amount'] ?? 0.0),
+                rawStatus: $status,
+                statusLevel: TpayRefundStatusMapper::level($status),
+            );
+        }
+
+        return $summaries;
     }
 
     /**

@@ -49,8 +49,17 @@ final class BlikHandler extends AbstractPaymentMethodHandler
         );
     }
 
+    /**
+     * BLIK is layer-zero (driven through pay(), never Shopware's async path), but a BLIK
+     * order is still refundable — defer REFUND to the base handler so it resolves the
+     * registered RefundProviderPort instead of reporting "unsupported".
+     */
     public function supports(PaymentHandlerType $type, string $paymentMethodId, Context $context): bool
     {
+        if ($type === PaymentHandlerType::REFUND) {
+            return parent::supports($type, $paymentMethodId, $context);
+        }
+
         return false;
     }
 

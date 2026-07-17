@@ -13,7 +13,9 @@ namespace Crehler\Tpay\Tests\Refund;
 
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
 use Crehler\Tpay\Refund\TpayRefundApiClient;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class TpayRefundApiClientTest extends TestCase
 {
@@ -70,6 +72,38 @@ final class TpayRefundApiClientTest extends TestCase
         self::assertFalse($client->isCountableStatus('CANCEL'));
     }
 
+    public function testListRefundsSinceBuildsQueryStringAndExtractsRows(): void
+    {
+        $tpay = $this->makeTpay(['refunds' => []], globalRefunds: [
+            ['amount' => 12.5, 'status' => 'done', 'transactionId' => 'TR1'],
+        ]);
+
+        $refunds = $this->client()->listRefundsSince(
+            $tpay,
+            new DateTimeImmutable('2026-06-01 00:00:00'),
+            new DateTimeImmutable('2026-06-02 00:00:00'),
+            1,
+            100,
+        );
+
+        self::assertCount(1, $refunds);
+        self::assertSame('TR1', $refunds[0]['transactionId']);
+        self::assertSame(
+            'GET /refunds?from=2026-06-01+00%3A00%3A00&to=2026-06-02+00%3A00%3A00&page=1&limit=100',
+            $tpay->refunds()->lastRunCall,
+        );
+    }
+
+    public function testListRefundsSincePropagatesGatewayFailure(): void
+    {
+        $tpay = $this->makeTpay(['refunds' => []]);
+        $tpay->refunds()->failNextRun = true;
+
+        $this->expectException(RuntimeException::class);
+
+        $this->client()->listRefundsSince($tpay, new DateTimeImmutable(), new DateTimeImmutable(), 1, 100);
+    }
+
     private function client(): TpayRefundApiClient
     {
         return new TpayRefundApiClient($this->createMock(EnhancedLogger::class));
@@ -101,6 +135,10 @@ final class TpayRefundApiClientTest extends TestCase
         };
 
         $refunds = new class($globalRefunds) {
+            public bool $failNextRun = false;
+
+            public ?string $lastRunCall = null;
+
             /** @param array<int, array<string, mixed>> $globalRefunds */
             public function __construct(private array $globalRefunds)
             {
@@ -110,6 +148,18 @@ final class TpayRefundApiClientTest extends TestCase
             public function getRefunds(): array
             {
                 return $this->globalRefunds;
+            }
+
+            /** @return array<string, mixed> */
+            public function run(string $method, string $path): array
+            {
+                if ($this->failNextRun) {
+                    throw new RuntimeException('Tpay API unreachable');
+                }
+
+                $this->lastRunCall = $method . ' ' . $path;
+
+                return ['refunds' => $this->globalRefunds];
             }
         };
 

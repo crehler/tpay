@@ -78,4 +78,21 @@ final class TpayClientFactory extends AbstractGatewayClientFactory
     {
         return !$this->isSandbox(self::ENABLE_SANDBOX, $salesChannelId);
     }
+
+    /**
+     * Cheap (no SDK client built) identity of the Tpay account configured for a given
+     * scope, used to deduplicate sales channels that share one merchant account before
+     * running refund reconciliation. Only the clientId is included — never the secret —
+     * so this is safe to log or use as a cursor key.
+     *
+     * @throws \Crehler\PaymentBundle\Domain\Exception\GatewayConfigurationException when
+     *                                                                               this scope has no Tpay configured — caller should skip it
+     */
+    public function resolveAccountIdentity(?string $salesChannelId = null): string
+    {
+        $sandbox = $this->isSandbox(self::ENABLE_SANDBOX, $salesChannelId);
+        $clientId = $this->requireString($this->selectKey($sandbox, self::CLIENT_ID, self::SANDBOX_CLIENT_ID), $salesChannelId);
+
+        return ($sandbox ? 'sandbox:' : 'production:') . $clientId;
+    }
 }

@@ -12,11 +12,14 @@ declare(strict_types=1);
 namespace Crehler\Tpay\Refund;
 
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
+use DateTimeImmutable;
 use Throwable;
+use Tpay\OpenApi\Api\ApiAction;
 
 use function array_filter;
 use function array_is_list;
 use function array_values;
+use function http_build_query;
 use function in_array;
 use function is_array;
 use function round;
@@ -97,6 +100,40 @@ final class TpayRefundApiClient
     public function isCountableStatus(string $status): bool
     {
         return $this->shouldCountRefund(['status' => $status]);
+    }
+
+    /**
+     * Global refund list filtered by a time window (GET /refunds?from=&to=&page=&limit=),
+     * for reconciliation of refunds created directly in the Tpay panel. The SDK's
+     * RefundsApi::getRefunds() does not expose these query params — built here the same
+     * way the SDK's own ApiAction::addQueryFields() does internally (query string appended
+     * to the path, then the inherited public run() call).
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function listRefundsSince(object $tpay, DateTimeImmutable $from, DateTimeImmutable $to, int $page, int $limit): array
+    {
+        $query = [
+            'from' => $from->format('Y-m-d H:i:s'),
+            'to' => $to->format('Y-m-d H:i:s'),
+            'page' => $page,
+            'limit' => $limit,
+        ];
+
+        try {
+            $result = $tpay->refunds()->run(ApiAction::GET, '/refunds?' . http_build_query($query));
+
+            return $this->extractRefundRows($result);
+        } catch (Throwable $e) {
+            $this->logger->error('Tpay: could not load refund reconciliation delta', [
+                'from' => $query['from'],
+                'to' => $query['to'],
+                'page' => $page,
+                'exception' => $e->getMessage(),
+            ]);
+
+            throw $e;
+        }
     }
 
     /**

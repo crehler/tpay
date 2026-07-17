@@ -73,15 +73,21 @@ Wypełnij kartę **Dane produkcyjne** wartościami z **Kroku 1**:
 
 > ⚠️ **Wybór kanału sprzedaży.** U góry konfiguracji znajduje się przełącznik kanału sprzedaży. Ustawienia możesz zapisać globalnie („Wszystkie kanały sprzedaży") lub osobno dla wybranego kanału. Jeśli korzystasz z kilku kanałów z różnymi kontami Tpay — ustaw dane per kanał.
 
+> 🛑 **Test połączenia NIE zapisuje danych!** Przycisk testu pod kartą jedynie sprawdza poprawność wpisanych danych — **nie zapisuje ich**. Aby je zachować, po teście **osobno kliknij „Zapisz"** (prawy górny róg). Wyjście lub odświeżenie konfiguracji bez zapisania spowoduje utratę wpisanych danych.
+
 ### 2b. Dane sandbox (do testów)
 
 Aby płacić na koncie testowym, włącz **Tryb sandbox** i wypełnij kartę **Dane sandbox** danymi z panelu sandbox. Gdy tryb sandbox jest włączony, wtyczka używa danych sandbox zamiast produkcyjnych.
 
 ![Konfiguracja wtyczki, karta Dane sandbox — włączony przełącznik Tryb sandbox, pola sandbox i przycisk „Testuj dane sandbox"](images/06-config-sandbox.png)
 
+> 🛑 **Test połączenia NIE zapisuje danych!** Tak samo jak przy danych produkcyjnych — przycisk „Testuj dane sandbox" tylko weryfikuje klucze. Aby je zachować, po teście **osobno kliknij „Zapisz"** (prawy górny róg).
+
 ### 2c. Przetestuj dane
 
-Pod każdą kartą znajduje się przycisk testu: **„Testuj dane produkcyjne"** oraz **„Testuj dane sandbox"**. Kliknij właściwy po wpisaniu danych — wtyczka połączy się z Tpay i potwierdzi, że klucze są poprawne. Na koniec kliknij **„Zapisz"** (prawy górny róg).
+Pod każdą kartą znajduje się przycisk testu: **„Testuj dane produkcyjne"** oraz **„Testuj dane sandbox"**. Kliknij właściwy po wpisaniu danych — wtyczka połączy się z Tpay i potwierdzi, że klucze są poprawne.
+
+> 🛑 **Pamiętaj: test to nie zapis.** Kliknięcie przycisku testu **nie zapisuje** wpisanych danych — sprawdza je tylko. Dopiero **„Zapisz"** (prawy górny róg) utrwala konfigurację. Wykonaj zapis osobno po udanym teście, zarówno dla danych produkcyjnych, jak i sandbox.
 
 ![Komunikat sukcesu po teście połączenia — potwierdzenie poprawnych danych i liczba dostępnych kanałów płatności](images/07-config-test-connection.png)
 
