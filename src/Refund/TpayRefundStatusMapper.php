@@ -35,7 +35,13 @@ final class TpayRefundStatusMapper
             'cancel' => 'cancelled',
             'pending', 'new', 'hold', 'blik_pending' => 'in_progress',
             'blik_incorrect' => 'failed',
-            default => 'completed', // done, processed, blik_processed
+            'done', 'processed', 'blik_processed' => 'completed',
+            // A refund is marked "completed" only for the statuses we explicitly know are
+            // terminal-success. An unknown or newly-introduced Tpay status must never be
+            // silently recorded as a completed refund (that would tell Shopware the money
+            // was returned when it may not have been) — fall back to the non-terminal
+            // in_progress so the hourly reconciliation re-checks it once Tpay settles (WT-905).
+            default => 'in_progress',
         };
     }
 
@@ -46,12 +52,15 @@ final class TpayRefundStatusMapper
     public static function refundStatus(string $tpayStatus): RefundStatus
     {
         return match (self::level($tpayStatus)) {
-            'in_progress' => RefundStatus::IN_PROGRESS,
+            'completed' => RefundStatus::COMPLETED,
             // 'cancelled' is unreachable here (reconciliation skips cancel rows before
             // mapping), but map it defensively to FAILED so a cancel is never recorded
             // as a completed refund should this ever be called with one.
             'failed', 'cancelled' => RefundStatus::FAILED,
-            default => RefundStatus::COMPLETED,
+            // Everything else (including level()'s in_progress fallback for unknown Tpay
+            // statuses) stays non-terminal; only an explicit "completed" level yields a
+            // COMPLETED refund, so a future status can never silently settle as completed.
+            default => RefundStatus::IN_PROGRESS,
         };
     }
 }

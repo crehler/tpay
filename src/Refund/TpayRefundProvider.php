@@ -59,25 +59,50 @@ final class TpayRefundProvider implements RefundProviderPort
         $amount = round($command->amount / 100, 2);
 
         // Gateway is the source of truth: guard against over-refunding even if the
-        // entity-derived remaining amount drifts from Tpay's view.
+        // entity-derived remaining amount drifts from Tpay's view. The guard is
+        // fail-closed — if the balance cannot be verified we refuse the refund rather
+        // than firing it blind, because a silent over-refund moves real money (WT-905).
         try {
             $title = $this->apiClient->getTransactionTitle($tpay, $command->gatewayPaymentId);
             $total = $this->apiClient->getTransactionAmount($tpay, $command->gatewayPaymentId);
             $alreadyRefunded = $this->apiClient->getAlreadyRefunded($tpay, $command->gatewayPaymentId, $title);
-            $maxRefundable = round($total - $alreadyRefunded, 2);
-
-            if ($total > 0.0 && $amount > $maxRefundable) {
-                return RefundResult::failed(sprintf(
-                    'Refund amount %.2f exceeds the refundable balance %.2f at Tpay',
-                    $amount,
-                    $maxRefundable,
-                ));
-            }
         } catch (Throwable $e) {
-            $this->logger->warning('Tpay refundable-amount guard skipped (API error)', [
+            $this->logger->error('Tpay refundable-amount guard could not verify the balance; refusing refund (fail-closed)', [
                 'gatewayPaymentId' => $command->gatewayPaymentId,
                 'exception' => $e->getMessage(),
             ]);
+
+            return RefundResult::failed(
+                'Could not verify the refundable balance at Tpay; refund refused to avoid over-refunding',
+            );
+        }
+
+        // A settled Tpay transaction always reports a positive total; a non-positive value
+        // means the lookup did not return a usable amount, so we cannot bound the refund —
+        // refuse rather than refund against an unknown balance.
+        if ($total <= 0.0) {
+            $this->logger->error('Tpay reported a non-positive transaction total; refusing refund (fail-closed)', [
+                'gatewayPaymentId' => $command->gatewayPaymentId,
+                'total' => $total,
+            ]);
+
+            return RefundResult::failed(
+                'Could not determine the transaction total at Tpay; refund refused to avoid over-refunding',
+            );
+        }
+
+        // Compare in integer minor units to avoid float-boundary errors on an
+        // exact-balance refund: RefundCommand::amount is already minor units, so derive
+        // Tpay's remaining the same way. Equality is allowed; only a strict excess of at
+        // least one minor unit is rejected. (Integer compare over bccomp keeps this free
+        // of an ext-bcmath dependency.)
+        $maxRefundableMinor = (int) round(($total - $alreadyRefunded) * 100);
+        if ($command->amount > $maxRefundableMinor) {
+            return RefundResult::failed(sprintf(
+                'Refund amount %.2f exceeds the refundable balance %.2f at Tpay',
+                $amount,
+                $maxRefundableMinor / 100,
+            ));
         }
 
         try {

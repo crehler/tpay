@@ -57,7 +57,9 @@ final class TpayRefundStatusMapperTest extends TestCase
             'done' => ['done', 'completed'],
             'processed' => ['processed', 'completed'],
             'blik processed' => ['blik_processed', 'completed'],
-            'unknown status defaults to completed' => ['something_else', 'completed'],
+            // Unknown / newly-introduced statuses must fall back to the non-terminal
+            // in_progress, never be silently grouped as a completed refund (WT-905).
+            'unknown status defaults to in_progress' => ['something_else', 'in_progress'],
         ];
     }
 
@@ -78,7 +80,9 @@ final class TpayRefundStatusMapperTest extends TestCase
             'done' => ['done', RefundStatus::COMPLETED],
             'processed' => ['processed', RefundStatus::COMPLETED],
             'blik processed' => ['blik_processed', RefundStatus::COMPLETED],
-            'unknown status defaults to completed' => ['something_else', RefundStatus::COMPLETED],
+            // Unknown / newly-introduced statuses must fall back to IN_PROGRESS, never be
+            // silently recorded as a COMPLETED refund (WT-905).
+            'unknown status defaults to in_progress' => ['something_else', RefundStatus::IN_PROGRESS],
         ];
     }
 }

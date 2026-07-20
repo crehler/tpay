@@ -17,8 +17,7 @@ use Crehler\PaymentBundle\Domain\Constant\PaymentCustomFields;
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
 use Crehler\Tpay\Handler\{BankHandler, BlikHandler, CardHandler};
 use Crehler\Tpay\Infrastructure\Client\TpayClientFactory;
-use Crehler\Tpay\Refund\TpayRefundApiClient;
-use Crehler\Tpay\Refund\TpayRefundStatusMapper;
+use Crehler\Tpay\Refund\{TpayRefundApiClient, TpayRefundStatusMapper};
 use Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionEntity;
 use Throwable;
 
