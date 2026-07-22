@@ -117,11 +117,12 @@ final class BankHandler extends AbstractPaymentMethodHandler
      * so /checkout/finish/order (which does not re-fire SalesChannelContextSwitchEvent)
      * would otherwise send channelId=0 and Tpay would show its method list.
      *
-     * Applies equally to guest customers: the Store API headless flow uses
-     * PATCH /store-api/customer/cr/payment-sub-method to persist the choice
-     * per customer.id (guest=true rows included) and never fires the session
-     * subscriber, so without this fallback handle-payment would always send
-     * channelId=0 for guests.
+     * The choice is persisted on the customer account by the context switch
+     * (PATCH /store-api/context with `paymentSubMethod`) — there is no dedicated
+     * write endpoint. This applies equally to guests: a guest is a real customer
+     * row (guest=1), so its choice is stored and read back the same way. In a
+     * headless flow the finish step commonly runs on a fresh session/token, so
+     * without this account fallback handle-payment would send channelId=0.
      */
     private function resolveFromCustomer(Customer $customer, string $paymentMethodId): ?string
     {
