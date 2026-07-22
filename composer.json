@@ -3,7 +3,7 @@
     "description": "Tpay Payment Gateway for Shopware 6",
     "type": "shopware-platform-plugin",
     "license": "proprietary",
-    "version": "6.2.1",
+    "version": "6.2.2",
     "authors": [
         {
             "name": "Crehler Sp. z o. o.",
@@ -29,9 +29,9 @@
         "shopware-plugin-class": "Crehler\\Tpay\\CrehlerTpay",
         "plugin-icon": "src/Resources/config/tpay.jpg",
         "label": {
-            "de-DE": "Zahlungsgateway Tpay by CREHLER",
-            "en-GB": "Payment Gateway Tpay by CREHLER",
-            "pl-PL": "Bramka płatności Tpay by CREHLER"
+            "de-DE": "Zahlungsgateway Tpay",
+            "en-GB": "Payment Gateway Tpay",
+            "pl-PL": "Bramka płatności Tpay"
         },
         "description": {
             "de-DE": "Tpay ist einer der fuhrenden Zahlungsanbieter in Polen.",

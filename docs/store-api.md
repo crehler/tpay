@@ -165,4 +165,4 @@ curl -X POST 'https://twoj-sklep.pl/store-api/cr/payment/check' \
 
 Pytania o integrację headless? **[support@crehler.com](mailto:support@crehler.com)**
 
-<p align="center"><sub>Bramka płatności <strong>Tpay by CREHLER</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
+<p align="center"><sub>Bramka płatności <strong>Tpay</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>

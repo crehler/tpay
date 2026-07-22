@@ -72,4 +72,4 @@ Tpay rozróżnia dwie sytuacje:
 
 Problem ze zwrotem? Napisz do nas: **[support@crehler.com](mailto:support@crehler.com)**
 
-<p align="center"><sub>Bramka płatności <strong>Tpay by CREHLER</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
+<p align="center"><sub>Bramka płatności <strong>Tpay</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>

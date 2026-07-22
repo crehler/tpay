@@ -4,7 +4,7 @@
 
 <h1 align="center">Tpay dla Shopware 6 — dokumentacja</h1>
 
-<p align="center">Integracja bramki płatniczej <strong>Tpay</strong> ze sklepem <strong>Shopware 6</strong> — <strong>Bramka płatności Tpay by CREHLER</strong>.<br>
+<p align="center">Integracja bramki płatniczej <strong>Tpay</strong> ze sklepem <strong>Shopware 6</strong> — <strong>Bramka płatności Tpay</strong>.<br>
 BLIK (w tym Level 0), karty z formularzem w checkout, pay-by-link, raty oraz zwroty z panelu administratora.</p>
 
 ---
@@ -36,4 +36,4 @@ Shopware **6.6/6.7**, PHP **8.2–8.5**, aktywne konto Tpay z **Open API**, walu
 
 Masz pytanie? Napisz do nas: **[support@crehler.com](mailto:support@crehler.com)**
 
-<p align="center"><sub>Bramka płatności <strong>Tpay by CREHLER</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
+<p align="center"><sub>Bramka płatności <strong>Tpay</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>

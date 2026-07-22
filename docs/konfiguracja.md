@@ -4,7 +4,7 @@
 
 <h1 align="center">Tpay dla Shopware 6 — instrukcja konfiguracji</h1>
 
-<p align="center">Bramka płatności Tpay by CREHLER — krok po kroku: od danych z panelu Tpay po gotowe płatności w sklepie.</p>
+<p align="center">Bramka płatności Tpay — krok po kroku: od danych z panelu Tpay po gotowe płatności w sklepie.</p>
 
 ---
 
@@ -18,7 +18,7 @@ Potrzebujesz:
 
 - **aktywnego konta Tpay** z dostępem do **Open API** (do płatności produkcyjnych) lub **konta sandbox** (do testów),
 - sklepu Shopware z kanałem sprzedaży obsługującym walutę **PLN**,
-- zainstalowanej i aktywnej wtyczki **Bramka płatności Tpay by CREHLER**.
+- zainstalowanej i aktywnej wtyczki **Bramka płatności Tpay**.
 
 > 💡 **Najpierw testy.** Zalecamy skonfigurowanie i przetestowanie płatności na danych **sandbox**, a dopiero potem przełączenie na produkcję.
 
@@ -54,9 +54,9 @@ Potrzebny **tylko**, jeśli zamierzasz osadzić formularz karty w checkout (patr
 
 ## Krok 2 — Wpisz dane w konfiguracji wtyczki
 
-W panelu Shopware przejdź do **Rozszerzenia → Moje rozszerzenia**, znajdź **Bramka płatności Tpay by CREHLER** (musi być włączona — przełącznik po lewej) i kliknij **„Skonfiguruj"**.
+W panelu Shopware przejdź do **Rozszerzenia → Moje rozszerzenia**, znajdź **Bramka płatności Tpay** (musi być włączona — przełącznik po lewej) i kliknij **„Skonfiguruj"**.
 
-![Shopware: Rozszerzenia → Moje rozszerzenia — wtyczka Bramka płatności Tpay by CREHLER i przycisk „Skonfiguruj"](images/04-sw-extension-configure.png)
+![Shopware: Rozszerzenia → Moje rozszerzenia — wtyczka Bramka płatności Tpay i przycisk „Skonfiguruj"](images/04-sw-extension-configure.png)
 
 ### 2a. Dane produkcyjne
 
@@ -99,7 +99,7 @@ Aby metody Tpay (BLIK, karta, przelew) były widoczne w checkout, muszą być **
 
 ### 3a. Aktywuj metody płatności
 
-**Ustawienia → Metody płatności** — upewnij się, że metody Tpay są aktywne (przełącznik **„Aktywny"**). Wtyczka dodaje trzy: **Karta**, **BLIK** i **Przelew online** — każda opisana „… Bramka płatności Tpay by CREHLER".
+**Ustawienia → Metody płatności** — upewnij się, że metody Tpay są aktywne (przełącznik **„Aktywny"**). Wtyczka dodaje trzy: **Karta**, **BLIK** i **Przelew online** — każda z dopiskiem „… Obsługiwane przez Tpay".
 
 ![Shopware: Ustawienia → Metody płatności — Karta, BLIK i Przelew online (Tpay) z włączonym przełącznikiem „Aktywny"](images/08-sw-payment-methods.png)
 
@@ -227,4 +227,4 @@ W sandboxie wybierasz bank tak jak na produkcji. Płatność porzucona pozostaje
 
 Masz pytanie lub problem z konfiguracją? Napisz do nas: **[support@crehler.com](mailto:support@crehler.com)**
 
-<p align="center"><sub>Bramka płatności <strong>Tpay by CREHLER</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
+<p align="center"><sub>Bramka płatności <strong>Tpay</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
