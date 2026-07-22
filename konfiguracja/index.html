@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../images/tpay_logo.jpg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1027,7 +1027,7 @@
 
 <h1 align="center">Tpay dla Shopware 6 — instrukcja konfiguracji</h1>
 
-<p align="center">Bramka płatności Tpay by CREHLER — krok po kroku: od danych z panelu Tpay po gotowe płatności w sklepie.</p>
+<p align="center">Bramka płatności Tpay — krok po kroku: od danych z panelu Tpay po gotowe płatności w sklepie.</p>
 
 <hr />
 <blockquote>
@@ -1039,7 +1039,7 @@
 <ul>
 <li><strong>aktywnego konta Tpay</strong> z dostępem do <strong>Open API</strong> (do płatności produkcyjnych) lub <strong>konta sandbox</strong> (do testów),</li>
 <li>sklepu Shopware z kanałem sprzedaży obsługującym walutę <strong>PLN</strong>,</li>
-<li>zainstalowanej i aktywnej wtyczki <strong>Bramka płatności Tpay by CREHLER</strong>.</li>
+<li>zainstalowanej i aktywnej wtyczki <strong>Bramka płatności Tpay</strong>.</li>
 </ul>
 <blockquote>
 <p>💡 <strong>Najpierw testy.</strong> Zalecamy skonfigurowanie i przetestowanie płatności na danych <strong>sandbox</strong>, a dopiero potem przełączenie na produkcję.</p>
@@ -1062,8 +1062,8 @@
 </blockquote>
 <hr />
 <h2 id="krok-2-wpisz-dane-w-konfiguracji-wtyczki">Krok 2 — Wpisz dane w konfiguracji wtyczki<a class="headerlink" href="#krok-2-wpisz-dane-w-konfiguracji-wtyczki" title="Permanent link">&para;</a></h2>
-<p>W panelu Shopware przejdź do <strong>Rozszerzenia → Moje rozszerzenia</strong>, znajdź <strong>Bramka płatności Tpay by CREHLER</strong> (musi być włączona — przełącznik po lewej) i kliknij <strong>„Skonfiguruj"</strong>.</p>
-<p><img alt="Shopware: Rozszerzenia → Moje rozszerzenia — wtyczka Bramka płatności Tpay by CREHLER i przycisk „Skonfiguruj&quot;" src="../images/04-sw-extension-configure.png" /></p>
+<p>W panelu Shopware przejdź do <strong>Rozszerzenia → Moje rozszerzenia</strong>, znajdź <strong>Bramka płatności Tpay</strong> (musi być włączona — przełącznik po lewej) i kliknij <strong>„Skonfiguruj"</strong>.</p>
+<p><img alt="Shopware: Rozszerzenia → Moje rozszerzenia — wtyczka Bramka płatności Tpay i przycisk „Skonfiguruj&quot;" src="../images/04-sw-extension-configure.png" /></p>
 <h3 id="2a-dane-produkcyjne">2a. Dane produkcyjne<a class="headerlink" href="#2a-dane-produkcyjne" title="Permanent link">&para;</a></h3>
 <p>Wypełnij kartę <strong>Dane produkcyjne</strong> wartościami z <strong>Kroku 1</strong>:</p>
 <table>
@@ -1113,7 +1113,7 @@
 <h2 id="krok-3-przypisz-patnosci-do-kanau-sprzedazy">Krok 3 — Przypisz płatności do kanału sprzedaży<a class="headerlink" href="#krok-3-przypisz-patnosci-do-kanau-sprzedazy" title="Permanent link">&para;</a></h2>
 <p>Aby metody Tpay (BLIK, karta, przelew) były widoczne w checkout, muszą być <strong>aktywne</strong> i <strong>przypisane do kanału sprzedaży</strong>.</p>
 <h3 id="3a-aktywuj-metody-patnosci">3a. Aktywuj metody płatności<a class="headerlink" href="#3a-aktywuj-metody-patnosci" title="Permanent link">&para;</a></h3>
-<p><strong>Ustawienia → Metody płatności</strong> — upewnij się, że metody Tpay są aktywne (przełącznik <strong>„Aktywny"</strong>). Wtyczka dodaje trzy: <strong>Karta</strong>, <strong>BLIK</strong> i <strong>Przelew online</strong> — każda opisana „… Bramka płatności Tpay by CREHLER".</p>
+<p><strong>Ustawienia → Metody płatności</strong> — upewnij się, że metody Tpay są aktywne (przełącznik <strong>„Aktywny"</strong>). Wtyczka dodaje trzy: <strong>Karta</strong>, <strong>BLIK</strong> i <strong>Przelew online</strong> — każda z dopiskiem „… Obsługiwane przez Tpay".</p>
 <p><img alt="Shopware: Ustawienia → Metody płatności — Karta, BLIK i Przelew online (Tpay) z włączonym przełącznikiem „Aktywny&quot;" src="../images/08-sw-payment-methods.png" /></p>
 <h3 id="3b-dodaj-metody-do-kanau-sprzedazy">3b. Dodaj metody do kanału sprzedaży<a class="headerlink" href="#3b-dodaj-metody-do-kanau-sprzedazy" title="Permanent link">&para;</a></h3>
 <p>W menu po lewej (sekcja <strong>Kanały sprzedaży</strong>) wybierz swój kanał (np. <strong>Crehler</strong>). W sekcji <strong>Płatność i wysyłka</strong> → pole <strong>Metody płatności</strong> dodaj metody Tpay, a w polu <strong>Standardowa metoda płatności</strong> możesz ustawić jedną z nich jako domyślną. Upewnij się też, że <strong>Standardowa waluta</strong> to <strong>Złoty (PLN)</strong>. Zapisz.</p>
@@ -1343,7 +1343,7 @@
 <hr />
 <h2 id="wsparcie">Wsparcie<a class="headerlink" href="#wsparcie" title="Permanent link">&para;</a></h2>
 <p>Masz pytanie lub problem z konfiguracją? Napisz do nas: <strong><a href="mailto:support@crehler.com">support@crehler.com</a></strong></p>
-<p align="center"><sub>Bramka płatności <strong>Tpay by CREHLER</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
+<p align="center"><sub>Bramka płatności <strong>Tpay</strong> · <a href="https://crehler.com/">crehler.com</a></sub></p>
 
 
 
@@ -1419,7 +1419,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.top", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Skopiowano do schowka", "clipboard.copy": "Kopiuj do schowka", "search.result.more.one": "1 wi\u0119cej na tej stronie", "search.result.more.other": "# wi\u0119cej na tej stronie", "search.result.none": "Brak wynik\u00f3w wyszukiwania", "search.result.one": "Wyniki wyszukiwania: 1", "search.result.other": "Wyniki wyszukiwania: #", "search.result.placeholder": "Zacznij pisa\u0107, aby szuka\u0107", "search.result.term.missing": "Brak", "select.version": "Wybierz wersj\u0119"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
