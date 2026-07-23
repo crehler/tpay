@@ -46,6 +46,16 @@ class TpayNotificationSubscriber extends AbstractPaymentNotificationSubscriber
     }
 
     /**
+     * Tpay's classic payment notification requires the merchant server to reply
+     * with the plain-text body 'TRUE' to confirm receipt. Any other body makes
+     * Tpay treat the notification as undelivered and reschedule retries.
+     */
+    protected function successResponseBody(): string
+    {
+        return 'TRUE';
+    }
+
+    /**
      * Tpay notifications carry the x-jws-signature header and the form fields
      * tr_id/tr_crc/tr_status.
      */
