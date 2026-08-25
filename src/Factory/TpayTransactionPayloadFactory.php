@@ -24,6 +24,15 @@ final readonly class TpayTransactionPayloadFactory
 {
     private const CONFIG_DOMAIN = 'CrehlerTpay.config';
 
+    /**
+     * Tpay rejects a longer description — see the SDK's
+     * Tpay\OpenApi\Model\Fields\Transaction\Description, which validates with strlen(), so the
+     * limit counts BYTES, not characters.
+     *
+     * @var int
+     */
+    private const DESCRIPTION_MAX_LENGTH = 128;
+
     public function __construct(
         private TransactionDescriptionRenderer $descriptionRenderer,
     ) {
@@ -46,7 +55,12 @@ final readonly class TpayTransactionPayloadFactory
 
         return [
             'amount' => number_format($orderTransaction->totalAmount->amount / 100, 2, '.', ''),
-            'description' => $this->descriptionRenderer->render(self::CONFIG_DOMAIN, $order, $order->salesChannelId),
+            'description' => $this->descriptionRenderer->render(
+                self::CONFIG_DOMAIN,
+                $order,
+                $order->salesChannelId,
+                self::DESCRIPTION_MAX_LENGTH,
+            ),
             'hiddenDescription' => $orderTransaction->id,
             'payer' => $this->createPayerPayload($order),
             'callbacks' => [

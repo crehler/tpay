@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Now requires `crehler/payment-bundle: ^6.0 >=6.4.0` — the payload factory passes the gateway
+  description limit to the bundle's renderer.
+- **The transaction description is capped at Tpay's 128-byte limit.** The SDK validates
+  `description` with `strlen()`, so the limit counts bytes, not characters; an over-long value made
+  Tpay reject the transaction outright.
+
+### Fixed
+
+- **The payload factory test suite actually runs again.** `TpayTransactionPayloadFactoryTest`
+  constructed the factory without its required `TransactionDescriptionRenderer`, so every run died
+  with an `ArgumentCountError` — unnoticed because the suite bootstrapped the full Shopware kernel
+  (database and plugin install required) and CI runs only php-cs-fixer. The suite is pure unit
+  code, so it now boots from `tests/UnitTestBootstrap.php`.
+- Added a regression guard pinning `hiddenDescription` to the order transaction id: it is the
+  `tr_crc` key `TpayNotificationSubscriber` matches notifications on, and repurposing it would
+  silently break payment booking.
+
 ## 6.0.2
 
 ### Changed
