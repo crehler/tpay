@@ -27,6 +27,8 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
+use function is_string;
+
 #[AutoconfigureTag('shopware.payment.method.async')]
 final class BankHandler extends AbstractPaymentMethodHandler
 {
@@ -106,19 +108,47 @@ final class BankHandler extends AbstractPaymentMethodHandler
 
         // Tpay can reject a bank transfer at creation time; mirror CardHandler and surface
         // it as a failure instead of reporting a declined transaction as success.
-        if ($status === 'declined' || $status === 'error' || $status === 'failed') {
+        // `result` is checked alongside `status` because an HTTP 4xx carrying a JSON error
+        // document comes back as an ordinary array — result=failed plus an errors list, with
+        // no `status` at all. Same idiom as TpayConnectionChecker and TpayRefundProvider.
+        $outcome = $result['result'] ?? null;
+
+        if ($outcome === 'failed' || $status === 'declined' || $status === 'error' || $status === 'failed') {
             $reason = $result['reason'] ?? 'Bank transfer declined by provider';
             $this->logger->warning('Tpay: bank transaction declined', [
                 'transactionId' => $tpayTransactionId,
                 'status' => $status,
+                'result' => $outcome,
                 'reason' => $reason,
+                // Populated instead of `reason` when the decline arrived as an error document.
+                'errors' => $result['errors'] ?? null,
             ]);
 
             return PaymentResult::failure(errorMessage: (string) $reason);
         }
 
+        // The status check above is not enough on its own. ApiAction::checkResponse() throws
+        // only when an error response has an EMPTY body, so an HTTP 4xx carrying a JSON error
+        // document comes back here as an ordinary array — result=failed plus an errors list,
+        // with neither `status` nor `transactionPaymentUrl` in it. $status is then null, the
+        // decline branch is skipped, and `?? ''` reported a successful payment with an empty
+        // redirect — which the shared flow reads as "accepted without a redirect, the webhook
+        // finishes it". A bank transfer has no such path: the customer has to reach the bank.
+        $paymentUrl = $result['transactionPaymentUrl'] ?? null;
+
+        if (!is_string($paymentUrl) || $paymentUrl === '') {
+            $this->logger->warning('Tpay: bank transaction created without a payment URL', [
+                'transactionId' => $tpayTransactionId,
+                'status' => $status,
+                'result' => $result['result'] ?? null,
+                'errors' => $result['errors'] ?? null,
+            ]);
+
+            return PaymentResult::failure(errorMessage: 'Tpay did not return a payment URL');
+        }
+
         return PaymentResult::success(
-            redirectUrl: $result['transactionPaymentUrl'] ?? '',
+            redirectUrl: $paymentUrl,
             gatewayOrderId: $tpayTransactionId,
         );
     }

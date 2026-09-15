@@ -27,6 +27,8 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\{RedirectResponse, Request};
 use Symfony\Component\Routing\RouterInterface;
 
+use function is_string;
+
 #[AutoconfigureTag('shopware.payment.method.async')]
 final class BlikHandler extends AbstractPaymentMethodHandler
 {
@@ -119,12 +121,54 @@ final class BlikHandler extends AbstractPaymentMethodHandler
         $tpay = $this->tpayClientFactory->create($salesChannelId);
         $result = $tpay->transactions()->createTransaction($payload);
 
+        $status = $result['status'] ?? null;
         $tpayTransactionId = $result['transactionId'] ?? null;
+        $paymentUrl = $result['transactionPaymentUrl'] ?? null;
 
         $this->persistGatewayPaymentId($transaction->getOrderTransactionId(), $tpayTransactionId, $context);
 
+        // This handler read neither the status nor the URL, which the other three all do.
+        // A BLIK code Tpay rejects outright came back as a success, and the customer landed
+        // on a finish page for a payment that had already failed.
+        // `result` is checked alongside `status` because an HTTP 4xx carrying a JSON error
+        // document comes back as an ordinary array — result=failed plus an errors list, with
+        // no `status` at all. Same idiom as TpayConnectionChecker and TpayRefundProvider.
+        $outcome = $result['result'] ?? null;
+
+        if ($outcome === 'failed' || $status === 'declined' || $status === 'error' || $status === 'failed') {
+            $reason = $result['reason'] ?? 'BLIK payment declined by provider';
+            $this->logger->warning('Tpay: BLIK transaction declined', [
+                'transactionId' => $tpayTransactionId,
+                'status' => $status,
+                'result' => $outcome,
+                'reason' => $reason,
+                // Populated instead of `reason` when the decline arrived as an error document.
+                'errors' => $result['errors'] ?? null,
+            ]);
+
+            return PaymentResult::failure(errorMessage: (string) $reason);
+        }
+
+        $hasPaymentUrl = is_string($paymentUrl) && $paymentUrl !== '';
+
+        // With a code, Tpay authorizes in place and there is nothing to redirect to: the
+        // empty redirect is the signal that sends the customer to the in-shop polling page.
+        // Without one, the URL is the only way forward, so a missing URL is a dead end —
+        // and ApiAction::checkResponse() lets an HTTP 4xx with a JSON error body through as
+        // an ordinary array, with neither `status` nor `transactionPaymentUrl` set.
+        if (!$hasPaymentUrl && empty($blikCode)) {
+            $this->logger->warning('Tpay: BLIK transaction created without a payment URL', [
+                'transactionId' => $tpayTransactionId,
+                'status' => $status,
+                'result' => $result['result'] ?? null,
+                'errors' => $result['errors'] ?? null,
+            ]);
+
+            return PaymentResult::failure(errorMessage: 'Tpay did not return a payment URL');
+        }
+
         return PaymentResult::success(
-            redirectUrl: $result['transactionPaymentUrl'] ?? '',
+            redirectUrl: $hasPaymentUrl ? $paymentUrl : '',
             gatewayOrderId: $tpayTransactionId,
         );
     }
