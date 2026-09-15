@@ -21,4 +21,13 @@ final class Methods
     public const BANK_NAME = 'tpay_bank';
     public const CARD_NAME = 'tpay_card';
     public const BLIK_NAME = 'tpay_blik';
+
+    /**
+     * The gateway's own selection page. Not a fourth channel alongside the three above —
+     * it is the same Tpay checkout with the choice left to the customer, so it can offer
+     * anything the merchant's contract covers, including methods this plugin has no
+     * handler for.
+     */
+    public const PAYWALL_ID = 'c2d3531c5eac2592454f1895633270df';
+    public const PAYWALL_NAME = 'tpay_paywall';
 }

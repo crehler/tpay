@@ -34,6 +34,7 @@ final readonly class TpayConsentProvider implements ConsentProvider
             Methods::BLIK_NAME,
             Methods::BANK_NAME,
             Methods::CARD_NAME,
+            Methods::PAYWALL_NAME,
         ], true);
     }
 

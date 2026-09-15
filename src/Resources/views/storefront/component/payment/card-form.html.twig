@@ -1,7 +1,13 @@
 {#
-  Tpay card form — single source for both render contexts:
-    - embedded after the payment-method list (payment-form.html.twig), showHeader = false
-    - inline under the selected card method (payment-method.html.twig),  showHeader = true
+  Tpay card form. The bundle renders it after the payment-method list, resolving the path
+  from CardFormTemplateProviderPort (see TpayCardFormTemplateProvider) — never from a block
+  override, which cannot work at this template path (WT-910).
+
+  A second render context used to exist: inline under the selected card method, from this
+  plugin's own payment-method.html.twig, with showHeader = true. Both were gated on the same
+  embedCardForm setting, so the two contexts were never alternatives — they were two copies
+  of the form on one page, sharing the hardcoded tpayCardToken input. That override is gone;
+  every provider in the family now places its form where the bundle puts it.
 
   Expects `selectedCardPayment` (the Tpay card PaymentMethodEntity) in context.
 

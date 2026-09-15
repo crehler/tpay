@@ -14,6 +14,7 @@ namespace Crehler\Tpay\Handler;
 use Crehler\PaymentBundle\Application\Port\Driven\{OrderTransactionRepositoryInterface, PaymentSubMethodSessionResolverPort};
 use Crehler\PaymentBundle\Application\Port\Driving\OrderTransactionServicePort;
 use Crehler\PaymentBundle\Domain\Entity\OrderTransaction\OrderTransaction;
+use Crehler\PaymentBundle\Domain\Enum\PaymentType;
 use Crehler\PaymentBundle\Infrastructure\Handler\{AbstractPaymentMethodHandler, PaymentResult};
 use Crehler\PaymentBundle\Shared\{EnhancedLogger, FinalizeTokenService};
 use Crehler\Tpay\Factory\TpayTransactionPayloadFactory;
@@ -74,6 +75,17 @@ final class BlikHandler extends AbstractPaymentMethodHandler
         ?Struct $validateStruct,
     ): ?RedirectResponse {
         return $this->payViaBlikAuthorize($request, $transaction, $context);
+    }
+
+    public static function paymentType(): PaymentType
+    {
+        return PaymentType::BLIK;
+    }
+
+    /** BLIK is a code-entry payment with no channels to choose. */
+    public static function usesGatewayChannels(): bool
+    {
+        return false;
     }
 
     protected function getPaymentProviderName(): string

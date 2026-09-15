@@ -16,7 +16,7 @@ use Crehler\PaymentBundle\Domain\Constant\PaymentCustomFields;
 use Crehler\PaymentBundle\Domain\ValueObjects\PaymentStatus;
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
 use Crehler\Tpay\Enums\TpayApiTransactionStatus;
-use Crehler\Tpay\Handler\{BankHandler, BlikHandler, CardHandler};
+use Crehler\Tpay\Handler\{BankHandler, BlikHandler, CardHandler, TpayHandler};
 use Crehler\Tpay\Infrastructure\Client\TpayClientFactory;
 use Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionEntity;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -31,6 +31,7 @@ final readonly class TpayPaymentStatusProvider implements PaymentGatewayStatusPr
         BlikHandler::class,
         BankHandler::class,
         CardHandler::class,
+        TpayHandler::class,
     ];
 
     public function __construct(

@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Crehler\Tpay\Services;
 
+use Crehler\PaymentBundle\Domain\Enum\PaymentType;
 use Crehler\PaymentBundle\Infrastructure\Provider\{AbstractPaymentSubMethodProvider, RawSubMethod};
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
 use Crehler\Tpay\Constant\TpayPayGroup;
-use Crehler\Tpay\Handler\BankHandler;
 use Crehler\Tpay\Infrastructure\Client\TpayClientFactory;
 use Shopware\Core\Checkout\Payment\PaymentMethodEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -32,13 +32,6 @@ final class TpayPaymentSubMethodsService extends AbstractPaymentSubMethodProvide
     /**
      * @var mixed[]
      */
-    private const SUPPORTED_HANDLERS = [
-        BankHandler::class,
-    ];
-
-    /**
-     * @var mixed[]
-     */
     private const EXCLUDED_GROUP_IDS = TpayPayGroup::EXCLUDED_FROM_BANK;
 
     public function __construct(
@@ -47,9 +40,9 @@ final class TpayPaymentSubMethodsService extends AbstractPaymentSubMethodProvide
     ) {
     }
 
-    public function supportsPaymentMethod(PaymentMethodEntity $paymentMethodEntity): bool
+    public function supportedPaymentTypes(): array
     {
-        return in_array($paymentMethodEntity->getHandlerIdentifier(), self::SUPPORTED_HANDLERS, true);
+        return [PaymentType::PAY_BY_LINK];
     }
 
     protected function fetchRawSubMethods(

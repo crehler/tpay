@@ -42,7 +42,6 @@ final class Bank extends ShopwarePaymentMethod
             ],
             afterOrderEnabled: true,
             iconName: 'bank',
-            subMethodsEnabled: true,
         );
     }
 }

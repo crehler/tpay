@@ -97,6 +97,35 @@ final class TpayTransactionPayloadFactoryTest extends TestCase
     }
 
     /**
+     * The paywall method rests entirely on this: a transaction with no `pay` object is what
+     * makes Tpay return its own selection page rather than a redirect to one instrument.
+     * The SDK agrees — Transaction::getRequiredFields() names amount, description and payer,
+     * so `pay` is optional by contract, not by tolerance.
+     *
+     * An empty `pay` would not do. Pay::getRequiredFields() requires groupId, so sending the
+     * key with nothing in it is a validation error, and sending channelId = 0 is a different
+     * request again: still a bank transfer, landing on Tpay's bank list.
+     */
+    public function testTheBasePayloadCommitsToNoPaymentInstrument(): void
+    {
+        self::assertArrayNotHasKey('pay', $this->basePayload('Order 74449'));
+    }
+
+    public function testTheBankPayloadDoesCommitToOne(): void
+    {
+        $factory = new TpayTransactionPayloadFactory($this->renderer('Order 74449'));
+
+        $payload = $factory->createBankPayload(
+            $this->orderTransaction(),
+            'https://example.test/return',
+            'https://example.test/notify',
+            64,
+        );
+
+        self::assertSame(['channelId' => 64], $payload['pay']);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     private function basePayload(string $renderedDescription): array

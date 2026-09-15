@@ -15,7 +15,7 @@ use Crehler\PaymentBundle\Application\DTO\GatewayDetails\{GatewayPaymentDetails,
 use Crehler\PaymentBundle\Application\Port\Driven\GatewayPaymentDetailsProviderInterface;
 use Crehler\PaymentBundle\Domain\Constant\PaymentCustomFields;
 use Crehler\PaymentBundle\Shared\EnhancedLogger;
-use Crehler\Tpay\Handler\{BankHandler, BlikHandler, CardHandler};
+use Crehler\Tpay\Handler\{BankHandler, BlikHandler, CardHandler, TpayHandler};
 use Crehler\Tpay\Infrastructure\Client\TpayClientFactory;
 use Crehler\Tpay\Refund\{TpayRefundApiClient, TpayRefundStatusMapper};
 use Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionEntity;
@@ -33,7 +33,7 @@ use function trim;
  */
 final readonly class TpayGatewayDetailsProvider implements GatewayPaymentDetailsProviderInterface
 {
-    private const HANDLERS = [BlikHandler::class, BankHandler::class, CardHandler::class];
+    private const HANDLERS = [BlikHandler::class, BankHandler::class, CardHandler::class, TpayHandler::class];
 
     public function __construct(
         private TpayClientFactory $tpayClientFactory,

@@ -15,6 +15,7 @@ use Crehler\PaymentBundle\Application\Port\Driven\{OrderTransactionRepositoryInt
 use Crehler\PaymentBundle\Application\Port\Driving\OrderTransactionServicePort;
 use Crehler\PaymentBundle\Application\Service\StoredCardService;
 use Crehler\PaymentBundle\Domain\Entity\OrderTransaction\OrderTransaction;
+use Crehler\PaymentBundle\Domain\Enum\PaymentType;
 use Crehler\PaymentBundle\Infrastructure\Handler\{AbstractPaymentMethodHandler, PaymentResult};
 use Crehler\PaymentBundle\Shared\{EnhancedLogger, FinalizeTokenService};
 use Crehler\Tpay\Factory\TpayTransactionPayloadFactory;
@@ -50,6 +51,17 @@ final class CardHandler extends AbstractPaymentMethodHandler
             $paymentSubMethodSessionResolver,
             $orderTransactionRepository,
         );
+    }
+
+    public static function paymentType(): PaymentType
+    {
+        return PaymentType::CARD;
+    }
+
+    /** Cards have no channel list; saved cards are a separate mechanism. */
+    public static function usesGatewayChannels(): bool
+    {
+        return false;
     }
 
     protected function getPaymentProviderName(): string
